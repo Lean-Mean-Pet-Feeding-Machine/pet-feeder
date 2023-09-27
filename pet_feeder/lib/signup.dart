@@ -24,10 +24,14 @@ class _SignUpPageState extends State<SignUpPage> {
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           children: <Widget>[
             const SizedBox(height: 80.0),
-            Column(
+            const Column(
               children: <Widget>[
-                const SizedBox(height: 16.0),
-                const Text('Please register:'),
+                SizedBox(height: 16.0),
+                Text('Please register',
+                    style: TextStyle(
+                      fontSize: 24.0, // Adjust the font size as needed
+                      fontWeight: FontWeight.bold,
+                    )),
               ],
             ),
             const SizedBox(height: 120.0),
