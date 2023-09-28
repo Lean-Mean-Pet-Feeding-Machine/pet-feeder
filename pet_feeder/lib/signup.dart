@@ -4,6 +4,7 @@ class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _SignUpPageState createState() => _SignUpPageState();
 }
 
@@ -23,13 +24,14 @@ class _SignUpPageState extends State<SignUpPage> {
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           children: <Widget>[
-            const SizedBox(height: 80.0),
+            const SizedBox(height: 50.0),
             const Column(
               children: <Widget>[
                 SizedBox(height: 16.0),
-                Text('Please register',
+                Text('Please register:',
                     style: TextStyle(
-                      fontSize: 24.0, // Adjust the font size as needed
+                      fontSize: 24.0,
+                      color: Colors.blue, // Change the text color
                       fontWeight: FontWeight.bold,
                     )),
               ],
@@ -76,8 +78,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 labelText: 'Zip Code',
               ),
             ),
+            const SizedBox(height: 10.0),
             OverflowBar(
-              alignment: MainAxisAlignment.end,
+              alignment: MainAxisAlignment.center,
               children: <Widget>[
                 TextButton(
                   child: const Text('CANCEL'),
