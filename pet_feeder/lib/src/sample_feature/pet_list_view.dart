@@ -45,7 +45,7 @@ class _PetListPageState extends State<PetListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pet List'),
+        title: const Text('Pet List'),
       ),
       body: ListView.builder(
         itemCount: pets.length,
@@ -67,7 +67,7 @@ class _PetListPageState extends State<PetListPage> {
         onPressed: () {
           addPet();
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

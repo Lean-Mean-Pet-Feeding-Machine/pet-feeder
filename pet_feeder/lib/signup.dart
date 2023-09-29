@@ -4,18 +4,15 @@ class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _SignUpPageState createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _confirmPasswordController =
-      TextEditingController(); // Separate controller for Confirm Password
+  final _confirmPasswordController = TextEditingController();
   final _emailController = TextEditingController();
-  final _zipCodeController =
-      TextEditingController(); // Separate controller for Zip Code
+  final _zipCodeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,19 +21,27 @@ class _SignUpPageState extends State<SignUpPage> {
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           children: <Widget>[
-            const SizedBox(height: 50.0),
+            const SizedBox(height: 30.0),
+            Container(
+              height: 100.0, // Adjust the height as needed for your GIF
+              child: Image.asset(
+                  'assets/images/dogwag.gif'), // Replace with your GIF asset
+            ),
+            const SizedBox(height: 10.0), // Add spacing
             const Column(
               children: <Widget>[
                 SizedBox(height: 16.0),
-                Text('Please register:',
-                    style: TextStyle(
-                      fontSize: 24.0,
-                      color: Colors.blue, // Change the text color
-                      fontWeight: FontWeight.bold,
-                    )),
+                Text(
+                  'Please register:',
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ],
             ),
-            const SizedBox(height: 120.0),
+            const SizedBox(height: 40.0),
             TextField(
               controller: _usernameController,
               decoration: const InputDecoration(
@@ -78,7 +83,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 labelText: 'Zip Code',
               ),
             ),
-            const SizedBox(height: 10.0),
+            const SizedBox(height: 12.0),
             OverflowBar(
               alignment: MainAxisAlignment.center,
               children: <Widget>[

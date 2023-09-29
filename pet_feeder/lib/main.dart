@@ -1,6 +1,9 @@
+// import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'login.dart';
 import 'signup.dart';
+import 'myvet.dart';
 import 'src/app.dart';
 import 'src/settings/settings_controller.dart';
 import 'src/settings/settings_service.dart';
@@ -11,14 +14,14 @@ void main() async {
 
   runApp(
     MaterialApp(
-      //I set the initial route to SignUpPage for testing purposes, feel free to change it to the log in page when ready
       home: SignUpPage(), // Show SignUpPage initially
       initialRoute: '/login',
       routes: {
-        '/login': (context) => LoginPage(), // Route for SignUpPage
+        '/login': (context) => LoginPage(), // Route for Login Page
         '/signup': (context) => SignUpPage(), // Route for SignUpPage
         '/myapp': (context) =>
             MyApp(settingsController: settingsController), // Route for MyApp
+        '/myvet': (context) => MyVetMessagingPage(), //Route for My Vet page
       },
     ),
   );
