@@ -1,6 +1,7 @@
 // import 'dart:js';
 
 import 'package:flutter/material.dart';
+import 'package:pet_feeder/pet_info.dart';
 import 'login.dart';
 import 'signup.dart';
 import 'myvet.dart';
@@ -15,10 +16,11 @@ void main() async {
   runApp(
     MaterialApp(
       home: SignUpPage(), // Show SignUpPage initially
-      initialRoute: '/login',
+      initialRoute: '/pet-info',
       routes: {
         '/login': (context) => LoginPage(), // Route for Login Page
         '/signup': (context) => SignUpPage(), // Route for SignUpPage
+        '/pet-info': (context) => PetInfo(), // Route for SignUpPage
         '/myapp': (context) =>
             MyApp(settingsController: settingsController), // Route for MyApp
         '/myvet': (context) => MyVetMessagingPage(), //Route for My Vet page
