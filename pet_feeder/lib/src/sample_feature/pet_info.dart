@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class PetInfo extends StatefulWidget {
+  static const String routeName = '/pet-info';
   const PetInfo({Key? key}) : super(key: key);
 
   @override
@@ -18,10 +19,9 @@ class _PetInfoState extends State<PetInfo> {
   final _weightData = [12, 13, 13, 15, 16, 15];
   List<FlSpot> spot = [];
 
-
   @override
   Widget build(BuildContext context) {
-    for (var i=0.0; i<12; i++) {
+    for (var i = 0.0; i < 12; i++) {
       spot.add(FlSpot(i, i * 5));
     }
     print(spot.length);
@@ -60,8 +60,7 @@ class _PetInfoState extends State<PetInfo> {
                             fillColor: Colors.lightBlue,
                             filled: true,
                             labelText: 'Weight',
-                          )
-                      ),
+                          )),
                     ),
                     SizedBox(
                       width: 120,
@@ -104,8 +103,7 @@ class _PetInfoState extends State<PetInfo> {
                             fillColor: Colors.purpleAccent,
                             filled: true,
                             labelText: 'Alarm',
-                          )
-                      ),
+                          )),
                     ),
                   ],
                 ),
@@ -114,16 +112,12 @@ class _PetInfoState extends State<PetInfo> {
             SizedBox(
               width: 100,
               height: 250,
-              child: LineChart(
-                  LineChartData(
-                      lineBarsData: [
-                        LineChartBarData(
-                          spots: spot,
-                          isCurved: false,
-                        )
-                      ]
-                  )
-              ),
+              child: LineChart(LineChartData(lineBarsData: [
+                LineChartBarData(
+                  spots: spot,
+                  isCurved: false,
+                )
+              ])),
             ),
           ],
         ),

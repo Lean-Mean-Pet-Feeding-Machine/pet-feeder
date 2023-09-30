@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'sample_item_details_view.dart';
+import 'pet_info.dart'; // Import the PetInfo page
 
 class Pet {
   final int id;
@@ -34,10 +34,11 @@ class _PetListPageState extends State<PetListPage> {
   }
 
   void navigateToDetails(BuildContext context, Pet pet) {
+    // Navigate to the PetInfo page and pass the pet data
     Navigator.pushNamed(
       context,
-      SampleItemDetailsView.routeName,
-      arguments: pet,
+      PetInfo.routeName,
+      arguments: pet, // Pass the pet object to PetInfo page
     );
   }
 
@@ -54,11 +55,12 @@ class _PetListPageState extends State<PetListPage> {
           return ListTile(
             leading: CircleAvatar(
               backgroundImage: AssetImage(pet.iconAsset),
-              radius: 25, // Adjust the radius as needed
+              radius: 25,
             ),
             title: Text(pet.name),
             onTap: () {
-              navigateToDetails(context, pet);
+              navigateToDetails(
+                  context, pet); // Pass the pet object to the function
             },
           );
         },
