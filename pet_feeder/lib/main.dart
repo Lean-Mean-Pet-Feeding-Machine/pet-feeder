@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'login.dart';
 import 'signup.dart';
 import 'myvet.dart';
+import 'schedule.dart';
 import 'src/app.dart';
 import 'src/settings/settings_controller.dart';
 import 'src/settings/settings_service.dart';
@@ -24,6 +25,7 @@ void main() async {
         '/myapp': (context) =>
             MyApp(settingsController: settingsController), // Route for MyApp
         '/myvet': (context) => MyVetMessagingPage(), //Route for My Vet page
+        '/schedule': (context) => SchedulePage(), // Route for SchedulePage
       },
     ),
   );
