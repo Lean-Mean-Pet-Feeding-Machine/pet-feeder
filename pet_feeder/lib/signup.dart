@@ -104,7 +104,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         true; // Replace with actual sign-up logic
 
                     if (signUpSuccessful) {
-                      Navigator.pushReplacementNamed(context, '/myapp');
+                      Navigator.pushReplacementNamed(context, '/navbar');
                     }
                   },
                   child: const Text('SIGN UP'),
