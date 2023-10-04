@@ -26,6 +26,9 @@ class _PetInfoState extends State<PetInfo> {
     }
     print(spot.length);
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Pet name'),
+      ),
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: ListView(

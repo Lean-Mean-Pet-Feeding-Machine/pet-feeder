@@ -40,6 +40,13 @@ class _FoodCatalogPageState extends State<FoodCatalogPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Food Catalog'),
+        leading: InkWell(
+          onTap: () => Navigator.pop(context),
+          child: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+        ),
       ),
       body: ListView(
         children: [

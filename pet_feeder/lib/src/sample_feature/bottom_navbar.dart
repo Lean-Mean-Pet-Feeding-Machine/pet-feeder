@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_feeder/food_catalog.dart';
+import 'package:pet_feeder/forum.dart';
 import 'package:pet_feeder/myvet.dart';
 import 'package:pet_feeder/schedule.dart';
 import 'package:pet_feeder/src/sample_feature/pet_list_view.dart';
@@ -26,6 +27,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
     PetListPage(),
     SchedulePage(),
     MyVetMessagingPage(),
+    ForumPage(),
     FoodCatalogPage(),
   ];
 
@@ -50,6 +52,11 @@ class _BottomNavbarState extends State<BottomNavbar> {
             selectedIcon: Icon(Icons.vaccines),
             icon: Icon(Icons.vaccines_outlined),
             label: 'Vet',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.forum),
+            icon: Icon(Icons.forum_outlined),
+            label: 'Forum',
           ),
           NavigationDestination(
             selectedIcon: Icon(Icons.food_bank),
