@@ -23,9 +23,8 @@ class _SignUpPageState extends State<SignUpPage> {
           children: <Widget>[
             const SizedBox(height: 30.0),
             Container(
-              height: 100.0, // Adjust the height as needed for your GIF
-              child: Image.asset(
-                  'assets/images/dogwag.gif'), // Replace with your GIF asset
+              height: 100.0, // Adjust the height as needed for  GIF
+              child: Image.asset('assets/images/dogwag.gif'),
             ),
             const SizedBox(height: 10.0), // Add spacing
             const Column(

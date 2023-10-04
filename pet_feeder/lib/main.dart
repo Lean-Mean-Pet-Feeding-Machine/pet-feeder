@@ -9,6 +9,7 @@ import 'login.dart';
 import 'signup.dart';
 import 'myvet.dart';
 import 'schedule.dart';
+import 'forum.dart';
 import 'src/app.dart';
 import 'src/settings/settings_controller.dart';
 import 'src/settings/settings_service.dart';
@@ -29,8 +30,10 @@ void main() async {
             MyApp(settingsController: settingsController), // Route for MyApp
         '/myvet': (context) => MyVetMessagingPage(), //Route for My Vet page
         '/schedule': (context) => SchedulePage(), // Route for SchedulePage
-        '/navbar': (context) => BottomNavbar(), // Route for BottomNavbarPage. Need to fix this.
         '/food-catalog': (context) => FoodCatalogPage(), // Route for BottomNavbarPage. Need to fix this.
+        '/forum': (context) => ForumPage(), // Route for ForumPage
+        '/navbar': (context) =>
+            BottomNavbar(), // Route for BottomNavbarPage. Need to fix this.
       },
     ),
   );
