@@ -12,6 +12,7 @@ environment:
 dependencies:
   calendar_view: ^1.0.4
   fl_chart: ^0.63.0
+  carousel_slider: ^4.2.1
   flutter:
     sdk: flutter
   flutter_localizations:
@@ -34,3 +35,7 @@ flutter:
     # Add assets from the images directory to the application.
     - assets/images/
     - assets/images/main_logo.png
+    - assets/images/dog_food/food_label.png
+    - assets/images/dog_food/dog_food1.jpg
+    - assets/images/dog_food/dog_food2.jpg
+    - assets/images/dog_food/dog_food3.jpg

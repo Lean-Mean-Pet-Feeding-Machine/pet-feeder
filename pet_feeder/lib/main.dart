@@ -1,6 +1,7 @@
 // import 'dart:js';
 
 import 'package:flutter/material.dart';
+import 'package:pet_feeder/food_catalog.dart';
 import 'package:pet_feeder/src/sample_feature/bottom_navbar.dart';
 import 'package:pet_feeder/src/sample_feature/pet_info.dart';
 // import 'package:pet_feeder/pet_info.dart';
@@ -29,6 +30,7 @@ void main() async {
         '/myvet': (context) => MyVetMessagingPage(), //Route for My Vet page
         '/schedule': (context) => SchedulePage(), // Route for SchedulePage
         '/navbar': (context) => BottomNavbar(), // Route for BottomNavbarPage. Need to fix this.
+        '/food-catalog': (context) => FoodCatalogPage(), // Route for BottomNavbarPage. Need to fix this.
       },
     ),
   );
