@@ -22,19 +22,23 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(height: 80.0),
             Column(
               children: <Widget>[
-                Image.asset('assets/images/main_logo.png'),
+                Image.asset('assets/images/main_logo1.png'),
                 const SizedBox(height: 12.0),
-                const Text('Lean Mean Pet Feeding Machine'),
+                const Text(
+                  'Lean Mean Pet Feeding Machine',
+                  style: TextStyle(
+                    fontSize: 24.0,
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 120.0),
             TextField(
-              controller: _usernameController,
-              decoration: const InputDecoration(
-                filled: true,
-                labelText: 'Email',
-              )
-            ),
+                controller: _usernameController,
+                decoration: const InputDecoration(
+                  filled: true,
+                  labelText: 'Email',
+                )),
             const SizedBox(height: 12.0),
             TextField(
               controller: _passwordController,
@@ -46,13 +50,17 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Row(
               children: [
-                TextButton(onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const SignUpPage())), child: const Text('Register')),
+                TextButton(
+                    onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (context) => const SignUpPage())),
+                    child: const Text('Register')),
                 const Spacer(),
-                TextButton(onPressed: () => {/*TODO Route to Forgot Password page*/}, child: const Text('Forgot password')),
+                TextButton(
+                    onPressed: () => {/*TODO Route to Forgot Password page*/},
+                    child: const Text('Forgot password')),
               ],
             ),
-
             OverflowBar(
               alignment: MainAxisAlignment.center,
               children: <Widget>[

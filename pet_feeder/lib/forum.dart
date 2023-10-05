@@ -45,6 +45,7 @@ class ForumPage extends StatelessWidget {
           padding: EdgeInsets.all(16.0),
           margin: EdgeInsets.all(16.0),
           decoration: BoxDecoration(
+            color: Colors.white,
             border: Border.all(color: Colors.grey),
             borderRadius: BorderRadius.circular(8.0),
           ),

@@ -37,7 +37,14 @@ class _PetInfoState extends State<PetInfo> {
             const SizedBox(height: 80.0),
             Column(
               children: <Widget>[
-                Image.asset('assets/images/main_logo.png'),
+                ClipOval(
+                  child: Image.asset(
+                    'assets/images/main_logo.png',
+                    width: 200, // Adjust the width as needed
+                    height: 200, // Adjust the height as needed
+                    fit: BoxFit.cover,
+                  ),
+                ),
                 const SizedBox(height: 12.0),
                 Text(
                   _name,
@@ -60,7 +67,7 @@ class _PetInfoState extends State<PetInfo> {
                           ),
                           controller: _weightController,
                           decoration: const InputDecoration(
-                            fillColor: Colors.lightBlue,
+                            fillColor: Color.fromARGB(147, 3, 168, 244),
                             filled: true,
                             labelText: 'Weight',
                           )),
@@ -71,7 +78,7 @@ class _PetInfoState extends State<PetInfo> {
                       child: TextField(
                         controller: _breedController,
                         decoration: const InputDecoration(
-                          fillColor: Colors.lightGreen,
+                          fillColor: Color.fromARGB(147, 139, 195, 74),
                           filled: true,
                           labelText: 'Breed',
                         ),
@@ -91,7 +98,7 @@ class _PetInfoState extends State<PetInfo> {
                       child: TextField(
                         controller: _ageController,
                         decoration: const InputDecoration(
-                          fillColor: Colors.orangeAccent,
+                          fillColor: Color.fromARGB(193, 255, 172, 64),
                           filled: true,
                           labelText: 'Age',
                         ),
@@ -103,7 +110,7 @@ class _PetInfoState extends State<PetInfo> {
                       child: TextField(
                           controller: _alarmController,
                           decoration: const InputDecoration(
-                            fillColor: Colors.purpleAccent,
+                            fillColor: Color.fromARGB(171, 223, 64, 251),
                             filled: true,
                             labelText: 'Alarm',
                           )),

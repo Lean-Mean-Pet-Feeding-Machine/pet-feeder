@@ -20,20 +20,28 @@ void main() async {
 
   runApp(
     MaterialApp(
-      home: SignUpPage(), // Show SignUpPage initially
+      theme: ThemeData(
+        hintColor: Color.fromARGB(255, 58, 159, 241),
+        scaffoldBackgroundColor:
+            Color.fromARGB(82, 184, 250, 255), // Background color (light blue)
+        colorScheme: const ColorScheme.light(
+          primary: Color.fromARGB(
+              255, 23, 148, 250), // Primary color for light theme
+          secondary: Color(0xFF64B5F6), // Secondary color for light theme
+        ),
+      ),
+      home: SignUpPage(),
       initialRoute: '/login',
       routes: {
-        '/login': (context) => LoginPage(), // Route for Login Page
-        '/signup': (context) => SignUpPage(), // Route for SignUpPage
-        '/pet-info': (context) => PetInfo(), // Route for SignUpPage
-        '/myapp': (context) =>
-            MyApp(settingsController: settingsController), // Route for MyApp
-        '/myvet': (context) => MyVetMessagingPage(), //Route for My Vet page
-        '/schedule': (context) => SchedulePage(), // Route for SchedulePage
-        '/food-catalog': (context) => FoodCatalogPage(), // Route for BottomNavbarPage. Need to fix this.
-        '/forum': (context) => ForumPage(), // Route for ForumPage
-        '/navbar': (context) =>
-            BottomNavbar(), // Route for BottomNavbarPage. Need to fix this.
+        '/login': (context) => LoginPage(),
+        '/signup': (context) => SignUpPage(),
+        '/pet-info': (context) => PetInfo(),
+        '/myapp': (context) => MyApp(settingsController: settingsController),
+        '/myvet': (context) => MyVetMessagingPage(),
+        '/schedule': (context) => SchedulePage(),
+        '/food-catalog': (context) => FoodCatalogPage(),
+        '/forum': (context) => ForumPage(),
+        '/navbar': (context) => BottomNavbar(),
       },
     ),
   );

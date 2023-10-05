@@ -6,7 +6,6 @@ import 'package:pet_feeder/schedule.dart';
 import 'package:pet_feeder/src/sample_feature/pet_list_view.dart';
 
 class BottomNavbar extends StatefulWidget {
-
   const BottomNavbar({super.key});
 
   @override
@@ -65,11 +64,9 @@ class _BottomNavbarState extends State<BottomNavbar> {
           ),
         ],
         selectedIndex: currentIndex,
-        onDestinationSelected: (index) => {
-          setState(() => currentIndex = index)
-        },
+        onDestinationSelected: (index) =>
+            {setState(() => currentIndex = index)},
       ),
     );
   }
-
 }
