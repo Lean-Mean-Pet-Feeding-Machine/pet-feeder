@@ -133,7 +133,7 @@ List<Post> fakePosts = [
       tags: ['dog', 'pet', 'breed']),
   Post(
       username: 'User2',
-      text: 'Looking for advice on cat care.',
+      text: 'Looking for advice on dog care.',
       tags: ['dog', 'pet', 'care']),
   Post(
       username: 'User3',
