@@ -19,20 +19,26 @@ class _LoginPageState extends State<LoginPage> {
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           children: <Widget>[
-            const SizedBox(height: 80.0),
+            const SizedBox(height: 20.0),
             Column(
               children: <Widget>[
-                Image.asset('assets/images/main_logo1.png'),
-                const SizedBox(height: 12.0),
+                Image.asset('assets/images/main_logo.png'),
                 const Text(
-                  'Lean Mean Pet Feeding Machine',
+                  'PetFed',
                   style: TextStyle(
-                    fontSize: 24.0,
+                    fontSize: 26.0,
+                    fontFamily: 'Pacifico',
+                  ),
+                ),
+                const Text(
+                  'Your Lean Mean Pet Feeding Machine',
+                  style: TextStyle(
+                    fontSize: 20.0,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 120.0),
+            const SizedBox(height: 90.0),
             TextField(
                 controller: _usernameController,
                 decoration: const InputDecoration(

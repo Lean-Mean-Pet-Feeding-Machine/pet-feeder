@@ -23,13 +23,11 @@ class _SignUpPageState extends State<SignUpPage> {
           children: <Widget>[
             const SizedBox(height: 30.0),
             Container(
-              height: 100.0, // Adjust the height as needed for  GIF
-              child: Image.asset('assets/images/dogwag.gif'),
+              height: 200.0,
+              child: Image.asset('assets/images/dogncat.png'),
             ),
-            const SizedBox(height: 10.0), // Add spacing
             const Column(
               children: <Widget>[
-                SizedBox(height: 16.0),
                 Text(
                   'Please register:',
                   style: TextStyle(
