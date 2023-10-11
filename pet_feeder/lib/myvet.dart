@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'src/data_model/vet_db.dart';
 
 class MyVetMessagingPage extends StatefulWidget {
   @override

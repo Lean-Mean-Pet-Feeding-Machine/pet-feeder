@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:calendar_view/calendar_view.dart';
+import 'src/data_model/schedule_db.dart';
 
 void main() {
   runApp(
@@ -79,7 +80,7 @@ class _SchedulePageState extends State<SchedulePage> {
             child: DayView(
               controller: eventControllerInstance,
               eventTileBuilder: (date, events, boundary, start, end) {
-                // Return your widget to display as event tile.
+                // Returns widget to display as event tile.
                 return Container(
                   child: Column(
                     children: events.map((event) {
@@ -92,7 +93,6 @@ class _SchedulePageState extends State<SchedulePage> {
                   ),
                 );
               },
-              // ... other properties remain the same
             ),
           ),
         ],
