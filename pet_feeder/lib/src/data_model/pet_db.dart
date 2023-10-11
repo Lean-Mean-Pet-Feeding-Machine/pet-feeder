@@ -5,14 +5,14 @@ import 'food_item_db.dart';
 class PetData {
   PetData(
       {required this.id,
-        required this.name,
-        required this.weight,
-        required this.age,
-        required this.species,
-        required this.imagePath,
-        required this.schedule,
-        required this.foodItemData,
-        this.breed});
+      required this.name,
+      required this.weight,
+      required this.age,
+      required this.species,
+      required this.imagePath,
+      required this.schedule,
+      required this.foodItemData,
+      this.breed});
 
   String id;
   String name;
@@ -36,9 +36,11 @@ class PetDB {
         species: 'Dog',
         imagePath: 'assets/images/dog1.png',
         schedule: ['T20:30:00', 'T08:00:00'],
-        foodItemData: FoodItemData(petId: 'pet-001', username: 'user-001', imagePath: 'assets/images/dog_food/dog_food1.jpg'),
-        breed: 'Beagle'
-        ),
+        foodItemData: FoodItemData(
+            petId: 'pet-001',
+            username: 'user-001',
+            imagePath: 'assets/images/dog_food/dog_food1.jpg'),
+        breed: 'Beagle'),
     PetData(
         id: 'pet-002',
         name: 'Mittens',
@@ -47,28 +49,36 @@ class PetDB {
         species: 'Cat',
         imagePath: 'assets/images/cat1.png',
         schedule: ['T21:30:00'],
-        foodItemData: FoodItemData(petId: 'pet-002', username: 'user-003', imagePath: 'assets/images/dog_food/dog_food1.jpg'),
-        breed: 'Beagle'
+        foodItemData: FoodItemData(
+            petId: 'pet-002',
+            username: 'user-003',
+            imagePath: 'assets/images/dog_food/dog_food1.jpg'),
+        breed: 'Beagle'),
+    PetData(
+      id: 'pet-003',
+      name: 'Jeff',
+      weight: 34.4,
+      age: 3.2,
+      species: 'Dog',
+      imagePath: 'assets/images/dog2.png',
+      schedule: ['T20:30:00', 'T08:00:00'],
+      foodItemData: FoodItemData(
+          petId: 'pet-003',
+          username: 'user-001',
+          imagePath: 'assets/images/dog_food/dog_food1.jpg'),
     ),
     PetData(
-        id: 'pet-003',
-        name: 'Jeff',
-        weight: 34.4,
-        age: 3.2,
-        species: 'Dog',
-        imagePath: 'assets/images/dog2.png',
-        schedule: ['T20:30:00', 'T08:00:00'],
-        foodItemData: FoodItemData(petId: 'pet-003', username: 'user-001', imagePath: 'assets/images/dog_food/dog_food1.jpg'),
-    ),
-    PetData(
-        id: 'pet-004',
-        name: 'Catastrophic',
-        weight: 20.4,
-        age: 15.2,
-        species: 'Cat',
-        imagePath: 'assets/images/cat1.png',
-        schedule: ['T22:45:00'],
-        foodItemData: FoodItemData(petId: 'pet-001', username: 'user-001', imagePath: 'assets/images/dog_food/dog_food1.jpg'),
+      id: 'pet-004',
+      name: 'Catastrophic',
+      weight: 20.4,
+      age: 15.2,
+      species: 'Cat',
+      imagePath: 'assets/images/cat2.png',
+      schedule: ['T22:45:00'],
+      foodItemData: FoodItemData(
+          petId: 'pet-001',
+          username: 'user-001',
+          imagePath: 'assets/images/dog_food/dog_food1.jpg'),
     ),
   ];
 
@@ -85,4 +95,4 @@ class PetDB {
 PetDB userDB = PetDB();
 
 /// The currently logged in user.
-String currentPetID = 'user-005';
+String currentPetID = 'pet-001';

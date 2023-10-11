@@ -7,6 +7,8 @@ import 'sample_feature/pet_list_view.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
 
+import 'data_model/pet_db.dart';
+
 /// The Widget that configures your application.
 class MyApp extends StatelessWidget {
   const MyApp({
@@ -70,7 +72,8 @@ class MyApp extends StatelessWidget {
                   case SettingsView.routeName:
                     return SettingsView(controller: settingsController);
                   case PetInfo.routeName:
-                    return PetInfo(); // No need to pass any arguments
+                    PetData petData = routeSettings.arguments as PetData;
+                    return PetInfo(pet: petData);
                   case PetListPage.routeName:
                   default:
                     return PetListPage();

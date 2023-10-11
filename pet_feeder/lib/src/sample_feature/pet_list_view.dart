@@ -1,49 +1,17 @@
 import 'package:flutter/material.dart';
-import 'pet_info.dart'; // Import the PetInfo page
+import '../data_model/pet_db.dart';
+import 'pet_info.dart';
 
-class Pet {
-  final int id;
-  final String name;
-  final String iconAsset;
-
-  Pet(this.id, this.name, this.iconAsset);
-}
-
-class PetListPage extends StatefulWidget {
+class PetListPage extends StatelessWidget {
   static const String routeName = '/petList';
 
-  @override
-  _PetListPageState createState() => _PetListPageState();
-}
-
-class _PetListPageState extends State<PetListPage> {
-  List<Pet> pets = [
-    Pet(1, 'Pet 1', 'assets/images/dog1.png'),
-    Pet(2, 'Pet 2', 'assets/images/dog2.png'),
-    Pet(3, 'Pet 3', 'assets/images/dog3.png'),
-  ];
-
-  void addPet() {
-    final newId = pets.length + 1;
-    final newName = 'Pet $newId';
-    final newIconAsset = 'assets/images/flutter_logo.png';
-
-    setState(() {
-      pets.add(Pet(newId, newName, newIconAsset));
-    });
-  }
-
-  void navigateToDetails(BuildContext context, Pet pet) {
-    // Navigate to the PetInfo page and pass the pet data
-    Navigator.pushNamed(
-      context,
-      PetInfo.routeName,
-      arguments: pet, // Pass the pet object to PetInfo page
-    );
-  }
+  // List of pet IDs to display
+  final List<String> petIDs = ['pet-001', 'pet-002', 'pet-003', 'pet-004'];
 
   @override
   Widget build(BuildContext context) {
+    List<PetData> pets = userDB.getPets(petIDs);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pet List'),
@@ -54,22 +22,25 @@ class _PetListPageState extends State<PetListPage> {
           final pet = pets[index];
           return ListTile(
             leading: CircleAvatar(
-              backgroundImage: AssetImage(pet.iconAsset),
+              backgroundImage: AssetImage(pet
+                  .imagePath), // Assuming imagePath is the path to the pet's icon
               radius: 25,
             ),
             title: Text(pet.name),
             onTap: () {
-              navigateToDetails(
-                  context, pet); // Pass the pet object to the function
+              navigateToDetails(context, pet);
             },
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          addPet();
-        },
-        child: const Icon(Icons.add),
+    );
+  }
+
+  void navigateToDetails(BuildContext context, PetData pet) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PetInfo(pet: pet), // Pass the pet data directly
       ),
     );
   }

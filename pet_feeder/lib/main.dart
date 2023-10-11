@@ -13,6 +13,7 @@ import 'forum.dart';
 import 'src/app.dart';
 import 'src/settings/settings_controller.dart';
 import 'src/settings/settings_service.dart';
+import 'src/data_model/pet_db.dart';
 
 void main() async {
   final settingsController = SettingsController(SettingsService());
@@ -35,7 +36,14 @@ void main() async {
       routes: {
         '/login': (context) => LoginPage(),
         '/signup': (context) => SignUpPage(),
-        '/pet-info': (context) => PetInfo(),
+        '/pet-info': (context) {
+          // Extract the arguments passed to the route
+          final PetData pet =
+              ModalRoute.of(context)!.settings.arguments as PetData;
+
+          // Return the PetInfo widget with the extracted pet data
+          return PetInfo(pet: pet);
+        },
         '/myapp': (context) => MyApp(settingsController: settingsController),
         '/myvet': (context) => MyVetMessagingPage(),
         '/schedule': (context) => SchedulePage(),
