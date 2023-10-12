@@ -5,7 +5,7 @@ import 'dart:math';
 class FoodItemData {
   FoodItemData({
     required this.petId,
-    required this.username,
+    required this.userId,
     required this.imagePath,
     this.zipcode,
   }) {
@@ -13,7 +13,7 @@ class FoodItemData {
   }
 
   String petId;
-  String username;
+  String userId;
   String imagePath;
   Map<String, double>? nutrients;
   String? zipcode;
@@ -29,50 +29,54 @@ class FoodItemData {
     };
     return map;
   }
-
 }
 
 /// Provides access to and operations on all defined users.
 class FoodItemDB {
 
-
   final List<FoodItemData> _foodItems = [
     FoodItemData(
       petId: 'pet-001',
-      username: 'Jeff Robber',
+      userId: 'user-001',
       imagePath: 'assets/images/dog_food/dog_food1.jpg',
       zipcode: '96838',
     ),
     FoodItemData(
       petId: 'pet-002',
-      username: 'Lisa Rental',
-      imagePath: 'assets/images/dog_food/dog_food1.jpg',
+      userId: 'user-001',
+      imagePath: 'assets/images/dog_food/dog_food2.jpg',
       zipcode: '96789',
     ),
     FoodItemData(
       petId: 'pet-003',
-      username: 'Justin Case',
+      userId: 'user-002',
       imagePath: 'assets/images/dog_food/dog_food2.jpg',
       zipcode: '96850',
     ),
     FoodItemData(
       petId: 'pet-004',
-      username: 'Clara Voyant',
+      userId: 'user-002',
       imagePath: 'assets/images/dog_food/dog_food3.jpg',
       zipcode: '96081',
     ),
     FoodItemData(
-      petId: 'pet-004',
-      username: 'Sue Flay',
+      petId: 'pet-005',
+      userId: 'user-003',
       imagePath: 'assets/images/dog_food/dog_food3.jpg',
       zipcode: '96081',
     ),
   ];
 
-  String getPetId(FoodItemData foodItemData) {
-    return foodItemData.petId;
+  List<FoodItemData> getFoodItems() {
+    return _foodItems.toList();
   }
 
-  /// The singleton instance providing access to all user data for clients.
-  FoodItemDB foodItemDB = FoodItemDB();
+  List<FoodItemData> getFoodItemsForPet(String petId) {
+    return _foodItems.where((foodItem) => foodItem.petId == petId).toList();
+  }
+
+  List<FoodItemData> getFoodItemsForUser(String userId) {
+    return _foodItems.where((foodItem) => foodItem.userId == userId).toList();
+  }
 }
+FoodItemDB foodItemDB = FoodItemDB();
