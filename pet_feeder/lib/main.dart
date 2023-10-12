@@ -24,7 +24,7 @@ void main() async {
       theme: ThemeData(
         hintColor: Color.fromARGB(255, 58, 159, 241),
         scaffoldBackgroundColor:
-            Color.fromARGB(82, 184, 250, 255), // Background color (light blue)
+            Color.fromARGB(255, 227, 242, 255), // Background color (light blue)
         colorScheme: const ColorScheme.light(
           primary: Color.fromARGB(
               255, 23, 148, 250), // Primary color for light theme
