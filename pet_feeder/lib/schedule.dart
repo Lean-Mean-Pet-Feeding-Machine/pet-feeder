@@ -1,101 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:calendar_view/calendar_view.dart';
 import 'src/data_model/schedule_db.dart';
 
-void main() {
-  runApp(
-    MaterialApp(
-      home: SchedulePage(),
-    ),
-  );
-}
-
-class SchedulePage extends StatefulWidget {
-  @override
-  _SchedulePageState createState() => _SchedulePageState();
-}
-
-class _SchedulePageState extends State<SchedulePage> {
-  DateTime? selectedDate;
-  TextEditingController eventController = TextEditingController();
-  late EventController eventControllerInstance;
-
-  @override
-  void initState() {
-    super.initState();
-    eventControllerInstance = EventController();
-  }
-
-  void _selectDate(BuildContext context) async {
-    DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2050),
-    );
-
-    if (pickedDate != null && pickedDate != selectedDate) {
-      setState(() {
-        selectedDate = pickedDate;
-      });
-    }
-  }
-
-  void _addEvent() {
-    final event = CalendarEventData(
-      date: selectedDate!,
-      event: eventController.text,
-      title: eventController.text,
-    );
-
-    setState(() {
-      eventControllerInstance
-          .add(event); // Add the event to the EventController
-      eventController.clear(); // Clear the text field after adding the event
-    });
-  }
+class SchedulePage extends StatelessWidget {
+  final PetScheduleDB petScheduleDB = PetScheduleDB();
+  final List<Color> boxColors = [
+    Colors.blue[100]!,
+    Colors.green[100]!,
+    Colors.orange[100]!,
+    Colors.pink[100]!,
+  ];
 
   @override
   Widget build(BuildContext context) {
+    List<PetScheduleData> petSchedules = petScheduleDB.getAllPetSchedules();
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Schedule'),
       ),
-      body: Column(
-        children: [
-          ElevatedButton(
-            // TODO: Add time and date to schedule
-            onPressed: () => _selectDate(context),
-            child: Text('Select Date'),
-          ),
-          Padding(
+      body: ListView.builder(
+        itemCount: petSchedules.length,
+        itemBuilder: (context, index) {
+          PetScheduleData petSchedule = petSchedules[index];
+          List<String> scheduleItems = petSchedule.schedule;
+
+          return Container(
+            margin: EdgeInsets.all(8.0),
             padding: EdgeInsets.all(16.0),
-            child: TextField(
-              controller: eventController,
-              decoration: InputDecoration(labelText: 'Add Feeding Time:'),
-              onSubmitted: (_) => _addEvent(),
+            decoration: BoxDecoration(
+              color: boxColors[index % boxColors.length], // loop through colors
+              borderRadius: BorderRadius.circular(10.0),
             ),
-          ),
-          Expanded(
-            child: DayView(
-              controller: eventControllerInstance,
-              eventTileBuilder: (date, events, boundary, start, end) {
-                // Returns widget to display as event tile.
-                return Container(
-                  child: Column(
-                    children: events.map((event) {
-                      return ListTile(
-                        title: Text(event.title),
-                        subtitle:
-                            Text('${event.date.hour}:${event.date.minute}'),
-                      );
-                    }).toList(),
-                  ),
-                );
-              },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Pet: ${petSchedule.petName}',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 8.0),
+                Text(
+                  'Meal Times: ${scheduleItems.join(", ")}',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
