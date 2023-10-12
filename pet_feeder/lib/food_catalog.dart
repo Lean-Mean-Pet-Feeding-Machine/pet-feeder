@@ -51,8 +51,8 @@ class _FoodCatalogPageState extends State<FoodCatalogPage> {
           Padding(
             padding: const EdgeInsets.all(50.0),
             child: Image(
-              width: 400,
-              height: 600,
+              width: 100,
+              height: 200,
               image: AssetImage(foodItem.imagePath),
             ),
           ),
