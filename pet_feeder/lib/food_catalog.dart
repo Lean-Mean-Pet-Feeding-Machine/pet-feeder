@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:pet_feeder/src/data_model/food_item_db.dart';
 
 final List<String> images = [
   'assets/images/dog_food/dog_food1.jpg',
   'assets/images/dog_food/dog_food2.jpg',
   'assets/images/dog_food/dog_food3.jpg',
 ];
+
+final List<String> petIds = [
+  'pet-001',
+  'pet-002',
+  'pet-003',
+  'pet-004',
+];
+
+const currentPet = 'pet-002';
 
 class FoodCatalogPage extends StatefulWidget {
   const FoodCatalogPage({super.key});
@@ -14,22 +24,57 @@ class FoodCatalogPage extends StatefulWidget {
   _FoodCatalogPageState createState() => _FoodCatalogPageState();
 }
 
+
+var foodItems = foodItemDB;
 class _FoodCatalogPageState extends State<FoodCatalogPage> {
 
   final List<Text> nutrientInfo = [
     const Text('Has too much carbohydrates'),
     const Text('High in sodium'),
     const Text('Good amount of protein'),
-    const Text('Good calcium'),
+    const Text('fdkfjl'),
   ];
 
+  List<Text> nutientInfo(FoodItemData foodItemData) {
+    List<Text> list = [];
+    foodItemData.nutrients?.forEach((key, value) {
+      list.add(Text('$key: ${value.truncate()}'));
+    });
+    return list;
+  }
 
-  final List<Widget> recommendations = images.map((path) => Container(
+  Widget info(FoodItemData foodItem) {
+    return
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(50.0),
+            child: Image(
+              width: 100,
+              height: 200,
+              image: AssetImage(foodItem.imagePath),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsetsDirectional.all(50.0),
+            child: Column(
+              children: nutientInfo(foodItem),
+            ),
+          )
+        ],
+    );
+  }
+
+
+
+
+  final List<Widget> recommendations = images.map((imagePath) => Container(
                 margin: EdgeInsets.all(6.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
                   image: DecorationImage(
-                    image: AssetImage(path),
+                    image: AssetImage(imagePath),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -52,30 +97,13 @@ class _FoodCatalogPageState extends State<FoodCatalogPage> {
         children: [
            Column(
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(50.0),
-                    child: Image(
-                      image: AssetImage('assets/images/dog_food/food_label.png'),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.all(50.0),
-
-                    child: Column(
-                      children: nutrientInfo,
-                    ),
-                  )
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Recommendation'),
-                ],
-              )
+              info(foodItems.getFoodItemsForPet(currentPet).first)
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Recommendation'),
             ],
           ),
           CarouselSlider(
@@ -87,7 +115,7 @@ class _FoodCatalogPageState extends State<FoodCatalogPage> {
               autoPlay: false,
               aspectRatio: 16 / 9,
               autoPlayCurve: Curves.fastOutSlowIn,
-              enableInfiniteScroll: true,
+              enableInfiniteScroll: false,
               autoPlayAnimationDuration: Duration(milliseconds: 800),
               viewportFraction: 0.4,
             ),

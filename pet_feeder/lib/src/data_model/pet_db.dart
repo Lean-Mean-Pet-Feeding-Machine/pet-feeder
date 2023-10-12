@@ -38,7 +38,7 @@ class PetDB {
         schedule: ['T20:30:00', 'T08:00:00'],
         foodItemData: FoodItemData(
             petId: 'pet-001',
-            username: 'user-001',
+            userId: 'user-001',
             imagePath: 'assets/images/dog_food/dog_food1.jpg'),
         breed: 'Beagle'),
     PetData(
@@ -51,7 +51,7 @@ class PetDB {
         schedule: ['T21:30:00'],
         foodItemData: FoodItemData(
             petId: 'pet-002',
-            username: 'user-003',
+            userId: 'user-003',
             imagePath: 'assets/images/dog_food/dog_food1.jpg'),
         breed: 'Beagle'),
     PetData(
@@ -64,7 +64,7 @@ class PetDB {
       schedule: ['T20:30:00', 'T08:00:00'],
       foodItemData: FoodItemData(
           petId: 'pet-003',
-          username: 'user-001',
+          userId: 'user-001',
           imagePath: 'assets/images/dog_food/dog_food1.jpg'),
     ),
     PetData(
@@ -77,7 +77,7 @@ class PetDB {
       schedule: ['T22:45:00'],
       foodItemData: FoodItemData(
           petId: 'pet-001',
-          username: 'user-001',
+          userId: 'user-001',
           imagePath: 'assets/images/dog_food/dog_food1.jpg'),
     ),
   ];
