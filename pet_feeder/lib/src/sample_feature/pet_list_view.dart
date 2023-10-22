@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../data_model/pet_db.dart';
 import 'pet_info.dart';
+import 'package:pet_feeder/src/sample_feature/side_menu.dart';
 
 class PetListPage extends StatelessWidget {
   static const String routeName = '/petList';
@@ -16,6 +17,7 @@ class PetListPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Pet List'),
       ),
+      drawer: CustomDrawer(),
       body: ListView.builder(
         itemCount: pets.length,
         itemBuilder: (context, index) {

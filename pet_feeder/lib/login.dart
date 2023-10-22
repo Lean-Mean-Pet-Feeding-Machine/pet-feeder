@@ -1,25 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../src/data_model/user_db.dart';
 import 'signup.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class AuthNotifier extends StateNotifier<UserData?> {
+  final UserDB _userDB;
 
-  @override
-  _LoginPageState createState() => _LoginPageState();
+  AuthNotifier(this._userDB) : super(null);
+
+  Future<void> loginUser(String email) async {
+    UserData? user = _userDB.getUserByEmail(email);
+    if (user != null) {
+      state = user;
+    } else {
+      state = null;
+      // Handle invalid login attempt
+    }
+  }
 }
 
-class _LoginPageState extends State<LoginPage> {
-  // TODO: Add text editing controllers (101)
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
+final authProvider = StateNotifierProvider<AuthNotifier, UserData?>((ref) {
+  return AuthNotifier(ref.read(userDBProvider));
+});
+
+final userDBProvider = Provider<UserDB>((ref) => UserDB());
+final _passwordController = TextEditingController();
+
+class LoginPage extends ConsumerWidget {
+  // Manage the email input
+  final TextEditingController _emailController = TextEditingController();
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           children: <Widget>[
-            const SizedBox(height: 20.0),
             Column(
               children: <Widget>[
                 Image.asset('assets/images/main_logo.png'),
@@ -39,12 +56,17 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
             const SizedBox(height: 90.0),
+            // Bind the TextField with email input
             TextField(
-                controller: _usernameController,
-                decoration: const InputDecoration(
-                  filled: true,
-                  labelText: 'Email',
-                )),
+              controller: _emailController,
+              decoration: const InputDecoration(
+                filled: true,
+                labelText: 'Email',
+              ),
+              onChanged: (email) {
+                // Might remove this since there's no need to do anything here as the value is directly managed by the controller
+              },
+            ),
             const SizedBox(height: 12.0),
             TextField(
               controller: _passwordController,
@@ -67,14 +89,35 @@ class _LoginPageState extends State<LoginPage> {
                     child: const Text('Forgot password')),
               ],
             ),
+            const SizedBox(height: 12.0),
             OverflowBar(
               alignment: MainAxisAlignment.center,
               children: <Widget>[
                 ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Sign in')),
+                  onPressed: () async {
+                    // Get email from the TextEditingController
+                    String email = _emailController.text.trim();
+
+                    // Pass the email to loginUser function
+                    await ref.read(authProvider.notifier).loginUser(email);
+
+                    // Check if user is logged in successfully
+                    if (ref.watch(authProvider) != null) {
+                      // Navigate to the next screen
+                      // ignore: use_build_context_synchronously
+                      Navigator.pushReplacementNamed(context, '/navbar');
+                    } else {
+                      // Handle invalid login attempt
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                              'Invalid email or password. Please try again.'),
+                        ),
+                      );
+                    }
+                  },
+                  child: const Text('Sign in'),
+                ),
               ],
             ),
           ],

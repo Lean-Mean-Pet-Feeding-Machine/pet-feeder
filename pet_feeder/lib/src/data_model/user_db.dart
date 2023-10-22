@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart';
+
 /// The data associated with users.
 class UserData {
   UserData({
@@ -24,7 +26,7 @@ class UserDB {
   final List<UserData> _users = [
     UserData(
       id: 'user-001',
-      email: 'user1@example.com',
+      email: 'Mark@hawaii.edu',
       userName: 'Mark',
       imagePath: 'assets/images/user_pfp/user1.jpg',
       zipCode: '12345',
@@ -33,7 +35,7 @@ class UserDB {
     ),
     UserData(
       id: 'user-002',
-      email: 'user2@example.com',
+      email: 'Elon@gmail.com',
       userName: 'Elon',
       imagePath: 'assets/images/user_pfp/user2.jpg',
       zipCode: '98622',
@@ -42,7 +44,7 @@ class UserDB {
     ),
     UserData(
       id: 'user-003',
-      email: 'user3@example.com',
+      email: 'ArianaG@hawaii.edu',
       userName: 'Ariana',
       imagePath: 'assets/images/user_pfp/user3.jpg',
       zipCode: '98455',
@@ -64,10 +66,17 @@ class UserDB {
         .where((userID) => getUser(userID).zipCode == zipCode)
         .toList();
   }
+
+  UserData? getUserByEmail(String email) {
+    print('Searching for user with email: $email');
+    var user = _users.firstWhereOrNull(
+        (user) => user.email.toLowerCase() == email.toLowerCase());
+    print('Found user: $user');
+    return user;
+  }
 }
 
 /// The singleton instance providing access to all user data for clients.
 UserDB userDB = UserDB();
 
-
-//TODO: The user_db.dart file should define a variable called currentUserID. This specifies the currently logged in user. 
+UserData currentUser = userDB.getUser('user-001');
