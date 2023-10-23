@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data_model/pet_db.dart';
 import 'pet_info.dart';
 import 'package:pet_feeder/src/sample_feature/side_menu.dart';
 
-class PetListPage extends StatelessWidget {
+class PetListPage extends ConsumerWidget {
   static const String routeName = '/petList';
 
   // List of pet IDs to display
   final List<String> petIDs = ['pet-001', 'pet-002', 'pet-003', 'pet-004'];
 
   @override
-  Widget build(BuildContext context) {
-    List<PetData> pets = userDB.getPets(petIDs);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final petDB = ref.watch(petDBProvider);
+    List<PetData> pets = petDB.getPets(petIDs);
 
     return Scaffold(
       appBar: AppBar(
