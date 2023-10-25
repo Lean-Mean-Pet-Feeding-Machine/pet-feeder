@@ -11,29 +11,14 @@ import 'myvet.dart';
 import 'schedule.dart';
 import 'forum.dart';
 import 'src/app.dart';
-import 'src/settings/settings_controller.dart';
-import 'src/settings/settings_service.dart';
 import 'src/settings/settings_view.dart';
 import 'src/data_model/pet_db.dart';
 
 void main() async {
-  final settingsController = SettingsController(SettingsService());
-  await settingsController.loadSettings();
-
   runApp(
     ProviderScope(
       child: MaterialApp(
-        theme: ThemeData(
-          hintColor: Color.fromARGB(255, 58, 159, 241),
-          scaffoldBackgroundColor: Color.fromARGB(
-              255, 227, 242, 255), // Background color (light blue)
-          colorScheme: const ColorScheme.light(
-            primary: Color.fromARGB(
-                255, 23, 148, 250), // Primary color for light theme
-            secondary: Color(0xFF64B5F6), // Secondary color for light theme
-          ),
-        ),
-        home: MyApp(settingsController: settingsController),
+        home: MyApp(),
         initialRoute: '/login',
         routes: {
           '/login': (context) => LoginPage(),
@@ -47,14 +32,13 @@ void main() async {
             // Return the PetInfo widget with the extracted pet data
             return PetInfo(pet: pet);
           },
-          '/myapp': (context) => MyApp(settingsController: settingsController),
+          '/myapp': (context) => MyApp(),
           '/myvet': (context) => MyVetMessagingPage(),
           '/schedule': (context) => SchedulePage(),
           '/food-catalog': (context) => FoodCatalogPage(),
           '/forum': (context) => ForumPage(),
           '/navbar': (context) => BottomNavbar(),
-          '/settings': (context) =>
-              SettingsView(controller: settingsController),
+          '/settings': (context) => SettingsView(),
         },
       ),
     ),
