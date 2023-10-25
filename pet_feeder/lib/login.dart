@@ -23,7 +23,6 @@ final authProvider = StateNotifierProvider<AuthNotifier, UserData?>((ref) {
   return AuthNotifier(ref.read(userDBProvider));
 });
 
-final userDBProvider = Provider<UserDB>((ref) => UserDB());
 final _passwordController = TextEditingController();
 
 class LoginPage extends ConsumerWidget {
@@ -81,7 +80,7 @@ class LoginPage extends ConsumerWidget {
                 TextButton(
                     onPressed: () => Navigator.of(context).push(
                         MaterialPageRoute(
-                            builder: (context) => const SignUpPage())),
+                            builder: (context) => SignUpPage())),
                     child: const Text('Register')),
                 const Spacer(),
                 TextButton(

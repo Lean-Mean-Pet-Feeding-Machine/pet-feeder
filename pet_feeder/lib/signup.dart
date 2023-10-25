@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:pet_feeder/src/data_model/user_db.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key}) : super(key: key);
 
-  @override
-  _SignUpPageState createState() => _SignUpPageState();
-}
 
-class _SignUpPageState extends State<SignUpPage> {
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _zipCodeController = TextEditingController();
+class SignUpPage extends ConsumerWidget {
+  final _formKey = GlobalKey<FormBuilderState>();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final userDB = ref.watch(userDBProvider);
+
     return Scaffold(
       body: SafeArea(
         child: ListView(
@@ -38,79 +35,89 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ],
             ),
-            const SizedBox(height: 40.0),
-            TextField(
-              controller: _usernameController,
-              decoration: const InputDecoration(
-                filled: true,
-                labelText: 'Username',
-              ),
-            ),
-            const SizedBox(height: 12.0),
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(
-                filled: true,
-                labelText: 'Email',
-              ),
-            ),
-            const SizedBox(height: 12.0),
-            TextField(
-              controller: _passwordController,
-              decoration: const InputDecoration(
-                filled: true,
-                labelText: 'Password',
-              ),
-              obscureText: true,
-            ),
-            const SizedBox(height: 12.0),
-            TextField(
-              controller: _confirmPasswordController,
-              decoration: const InputDecoration(
-                filled: true,
-                labelText: 'Confirm Password',
-              ),
-              obscureText: true,
-            ),
-            const SizedBox(height: 12.0),
-            TextField(
-              controller: _zipCodeController,
-              decoration: const InputDecoration(
-                filled: true,
-                labelText: 'Zip Code',
-              ),
-            ),
-            const SizedBox(height: 12.0),
-            OverflowBar(
-              alignment: MainAxisAlignment.center,
-              children: <Widget>[
-                TextButton(
-                  child: const Text('CANCEL'),
-                  onPressed: () {
-                    _usernameController.clear();
-                    _emailController.clear();
-                    _passwordController.clear();
-                    _confirmPasswordController.clear();
-                    _zipCodeController.clear();
-                  },
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Simulate a sign-up process (replace with your actual sign-up logic)
-                    bool signUpSuccessful =
-                        true; // Replace with actual sign-up logic
-
-                    if (signUpSuccessful) {
-                      Navigator.pushReplacementNamed(context, '/navbar');
-                    }
-                  },
-                  child: const Text('SIGN UP'),
-                ),
-              ],
+            FormBuilder(
+              key: _formKey,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              child: Column(
+                children: [
+                  FormBuilderTextField(
+                    name: 'username',
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(),
+                    ]),
+                    decoration: InputDecoration(labelText: 'Username'),
+                  ),
+                  FormBuilderTextField(
+                    name: 'email',
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(),
+                      FormBuilderValidators.email(),
+                    ]),
+                    decoration: InputDecoration(labelText: 'Email'),
+                  ),
+                  FormBuilderTextField(
+                    name: 'password',
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(),
+                    ]),
+                    decoration: InputDecoration(labelText: 'Password'),
+                    obscureText: true,
+                  ),
+                  FormBuilderTextField(
+                    name: 'confirmPassword',
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(),
+                    ]),
+                    decoration: InputDecoration(labelText: 'Confirm Password'),
+                    obscureText: true,
+                  ),
+                  FormBuilderTextField(
+                    name: 'zipcode',
+                    validator: FormBuilderValidators.compose([
+                    ]),
+                    decoration: InputDecoration(labelText: 'Zipcode'),
+                  ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(onPressed: () {
+                          if (_formKey.currentState!.saveAndValidate()) {
+                            print(_formKey.currentState?.value);
+                            print(_formKey.currentState?.value['password']);
+                            userDB.addUser(
+                                UserData(
+                                  id: 'user-12',
+                                  email: _formKey.currentState?.value['email'],
+                                  userName: _formKey.currentState?.value['username'],
+                                  password: _formKey.currentState?.value['password'],
+                                ));
+                            Navigator.pushReplacementNamed(context, '/navbar');
+                          }
+                        },
+                            child: Text('Submit')
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(onPressed: () {
+                          _formKey.currentState?.reset();
+                        },
+                          child: Text('Clear')
+                         ),
+                      ),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.pushReplacementNamed(context, '/login');
+                      },
+                      child: Text('Go Back'),
+                  )
+                    ],
+                  ),
             ),
           ],
         ),
       ),
     );
   }
+
 }
