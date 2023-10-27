@@ -13,6 +13,7 @@ import 'forum.dart';
 import 'src/app.dart';
 import 'src/settings/settings_view.dart';
 import 'src/data_model/pet_db.dart';
+import 'src/data_model/user_db.dart';
 
 void main() async {
   runApp(
@@ -23,7 +24,14 @@ void main() async {
         routes: {
           '/login': (context) => LoginPage(),
           '/signup': (context) => SignUpPage(),
-          '/drawer': (context) => CustomDrawer(),
+          '/drawer': (context) {
+            // Extract the arguments passed to the route
+            final UserData? currentUser =
+                ModalRoute.of(context)!.settings.arguments as UserData?;
+
+            // Return the CustomDrawer widget with the extracted user data
+            return CustomDrawer(currentUser: currentUser);
+          },
           '/pet-info': (context) {
             // Extract the arguments passed to the route
             final PetData pet =
@@ -37,7 +45,14 @@ void main() async {
           '/schedule': (context) => SchedulePage(),
           '/food-catalog': (context) => FoodCatalogPage(),
           '/forum': (context) => ForumPage(),
-          '/navbar': (context) => BottomNavbar(),
+          '/navbar': (context) {
+            // Extract the arguments passed to the route
+            final UserData? loggedInUser =
+                ModalRoute.of(context)!.settings.arguments as UserData?;
+
+            // Return the BottomNavbar widget with the extracted user data
+            return BottomNavbar(currentUser: loggedInUser);
+          },
           '/settings': (context) => SettingsView(),
         },
       ),

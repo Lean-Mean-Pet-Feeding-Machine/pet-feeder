@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:provider/provider.dart';
 import '../data_model/user_db.dart';
 
-class CustomDrawer extends ConsumerWidget {
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // Get the current user data
-    final userDB = ref.watch(userDBProvider);
-    UserData currentUser = userDB.getUser(
-        'user-001'); // TODO: Replace 'user-001' with the actual user ID
+class CustomDrawer extends StatelessWidget {
+  final UserData? currentUser;
 
+  const CustomDrawer({required this.currentUser});
+
+  @override
+  Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -25,16 +22,16 @@ class CustomDrawer extends ConsumerWidget {
                 // Display the user's profile picture using CircleAvatar
                 CircleAvatar(
                   radius: 40,
-                  backgroundImage: AssetImage(currentUser.imagePath ?? ''),
+                  backgroundImage: AssetImage(currentUser?.imagePath ?? ''),
                 ),
                 SizedBox(height: 10),
                 // Display the user's name and email
                 Text(
-                  currentUser.userName,
+                  currentUser?.userName ?? 'Guest',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  currentUser.email,
+                  currentUser?.email ?? '',
                   style: TextStyle(fontSize: 14),
                 ),
               ],

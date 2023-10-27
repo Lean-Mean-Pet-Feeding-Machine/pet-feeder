@@ -28,7 +28,6 @@ final _passwordController = TextEditingController();
 class LoginPage extends ConsumerWidget {
   // Manage the email input
   final TextEditingController _emailController = TextEditingController();
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
@@ -79,8 +78,7 @@ class LoginPage extends ConsumerWidget {
               children: [
                 TextButton(
                     onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => SignUpPage())),
+                        MaterialPageRoute(builder: (context) => SignUpPage())),
                     child: const Text('Register')),
                 const Spacer(),
                 TextButton(
@@ -96,15 +94,20 @@ class LoginPage extends ConsumerWidget {
                   onPressed: () async {
                     // Get email from the TextEditingController
                     String email = _emailController.text.trim();
-
                     // Pass the email to loginUser function
                     await ref.read(authProvider.notifier).loginUser(email);
 
                     // Check if user is logged in successfully
                     if (ref.watch(authProvider) != null) {
-                      // Navigate to the next screen
-                      // ignore: use_build_context_synchronously
-                      Navigator.pushReplacementNamed(context, '/navbar');
+                      final loggedInUser = ref.read(authProvider);
+
+                      // Navigate to the next screen while passing the user data
+                      Navigator.pushReplacementNamed(
+                        context,
+                        '/navbar',
+                        arguments:
+                            loggedInUser, // Pass the user data as arguments
+                      );
                     } else {
                       // Handle invalid login attempt
                       ScaffoldMessenger.of(context).showSnackBar(

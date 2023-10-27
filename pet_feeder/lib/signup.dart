@@ -4,8 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:pet_feeder/src/data_model/user_db.dart';
 
-
-
 class SignUpPage extends ConsumerWidget {
   final _formKey = GlobalKey<FormBuilderState>();
 
@@ -73,51 +71,50 @@ class SignUpPage extends ConsumerWidget {
                   ),
                   FormBuilderTextField(
                     name: 'zipcode',
-                    validator: FormBuilderValidators.compose([
-                    ]),
+                    validator: FormBuilderValidators.compose([]),
                     decoration: InputDecoration(labelText: 'Zipcode'),
                   ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(onPressed: () {
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                        onPressed: () {
                           if (_formKey.currentState!.saveAndValidate()) {
                             print(_formKey.currentState?.value);
                             print(_formKey.currentState?.value['password']);
-                            userDB.addUser(
-                                UserData(
-                                  id: 'user-12',
-                                  email: _formKey.currentState?.value['email'],
-                                  userName: _formKey.currentState?.value['username'],
-                                  password: _formKey.currentState?.value['password'],
-                                ));
+                            userDB.addUser(UserData(
+                              id: 'user-12',
+                              email: _formKey.currentState?.value['email'],
+                              userName:
+                                  _formKey.currentState?.value['username'],
+                              password:
+                                  _formKey.currentState?.value['password'],
+                            ));
                             Navigator.pushReplacementNamed(context, '/navbar');
                           }
                         },
-                            child: Text('Submit')
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(onPressed: () {
+                        child: Text('Submit')),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                        onPressed: () {
                           _formKey.currentState?.reset();
                         },
-                          child: Text('Clear')
-                         ),
-                      ),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.pushReplacementNamed(context, '/login');
-                      },
-                      child: Text('Go Back'),
-                  )
-                    ],
+                        child: Text('Clear')),
                   ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.pushReplacementNamed(context, '/login');
+                    },
+                    child: Text('Go Back'),
+                  )
+                ],
+              ),
             ),
           ],
         ),
       ),
     );
   }
-
 }

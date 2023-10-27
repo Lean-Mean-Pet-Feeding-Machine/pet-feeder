@@ -5,8 +5,13 @@ import 'pet_info.dart';
 import 'package:pet_feeder/src/sample_feature/side_menu.dart';
 import 'package:pet_feeder/theme.dart';
 import 'package:pet_feeder/thememode.dart';
+import '../data_model/user_db.dart';
 
 class PetListPage extends ConsumerWidget {
+  final UserData? currentUser;
+
+  PetListPage({Key? key, required this.currentUser}) : super(key: key);
+
   static const String routeName = '/petList';
 
   // List of pet IDs to display
@@ -27,7 +32,9 @@ class PetListPage extends ConsumerWidget {
         appBar: AppBar(
           title: const Text('Pet List'),
         ),
-        drawer: CustomDrawer(),
+        drawer: CustomDrawer(
+          currentUser: currentUser,
+        ),
         body: ListView.builder(
           itemCount: pets.length,
           itemBuilder: (context, index) {

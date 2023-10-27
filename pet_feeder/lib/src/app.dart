@@ -12,6 +12,7 @@ import 'package:pet_feeder/thememode.dart';
 import 'package:pet_feeder/theme.dart';
 
 import 'data_model/pet_db.dart';
+import 'data_model/user_db.dart';
 
 class MyApp extends ConsumerWidget {
   @override
@@ -59,8 +60,10 @@ class MyApp extends ConsumerWidget {
                 PetData petData = routeSettings.arguments as PetData;
                 return PetInfo(pet: petData);
               case PetListPage.routeName:
+                UserData? currentUser = routeSettings.arguments as UserData?;
+                return PetListPage(currentUser: currentUser);
               default:
-                return PetListPage();
+                return PetListPage(currentUser: null);
             }
           },
         );
