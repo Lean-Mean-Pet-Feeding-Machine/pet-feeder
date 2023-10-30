@@ -1,19 +1,18 @@
-// import 'dart:js';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pet_feeder/food_catalog.dart';
-import 'package:pet_feeder/src/sample_feature/bottom_navbar.dart';
-import 'package:pet_feeder/src/sample_feature/pet_info.dart';
-import 'package:pet_feeder/src/sample_feature/side_menu.dart';
-import 'login.dart';
-import 'signup.dart';
-import 'myvet.dart';
-import 'schedule.dart';
-import 'forum.dart';
-import 'src/app.dart';
-import 'src/settings/settings_view.dart';
-import 'src/data_model/pet_db.dart';
-import 'src/data_model/user_db.dart';
+import 'package:pet_feeder/features/authentication/presentation/login.dart';
+import 'package:pet_feeder/features/authentication/presentation/signup.dart';
+import 'package:pet_feeder/features/common/settings_view.dart';
+import 'package:pet_feeder/features/food_item/presentation/food_catalog.dart';
+import 'package:pet_feeder/features/common/bottom_navbar.dart';
+import 'package:pet_feeder/features/forum/presentation/forum.dart';
+import 'package:pet_feeder/features/pet/domain/pet_db.dart';
+import 'package:pet_feeder/features/pet/presentation/pet_info.dart';
+import 'package:pet_feeder/features/common/side_menu.dart';
+import 'package:pet_feeder/features/pet_schedule/presentation/pet_schedule.dart';
+import 'package:pet_feeder/features/user/domain/user_db.dart';
+import 'package:pet_feeder/features/vet/presentation/myvet.dart';
+import 'app.dart';
 
 void main() async {
   runApp(
