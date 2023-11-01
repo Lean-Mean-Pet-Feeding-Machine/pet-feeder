@@ -19,10 +19,7 @@ final List<String> petIds = [
 
 const currentPet = 'pet-002';
 
-
-
 class FoodCatalogPage extends ConsumerWidget {
-
   final List<Text> nutrientInfo = [
     const Text('Has too much carbohydrates'),
     const Text('High in sodium'),
@@ -39,38 +36,39 @@ class FoodCatalogPage extends ConsumerWidget {
   }
 
   Widget info(FoodItemData foodItem) {
-    return
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(50.0),
-            child: Image(
-              width: 100,
-              height: 200,
-              image: AssetImage(foodItem.imagePath),
-            ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(50.0),
+          child: Image(
+            width: 100,
+            height: 200,
+            image: AssetImage(foodItem.imagePath),
           ),
-          Padding(
-            padding: EdgeInsetsDirectional.all(50.0),
-            child: Column(
-              children: nutientInfo(foodItem),
-            ),
-          )
-        ],
+        ),
+        Padding(
+          padding: EdgeInsetsDirectional.all(50.0),
+          child: Column(
+            children: nutientInfo(foodItem),
+          ),
+        )
+      ],
     );
   }
 
-  final List<Widget> recommendations = images.map((imagePath) => Container(
-                margin: EdgeInsets.all(6.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  image: DecorationImage(
-                    image: AssetImage(imagePath),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              )).toList();
+  final List<Widget> recommendations = images
+      .map((imagePath) => Container(
+            margin: EdgeInsets.all(6.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.0),
+              image: DecorationImage(
+                image: AssetImage(imagePath),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ))
+      .toList();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -88,7 +86,7 @@ class FoodCatalogPage extends ConsumerWidget {
       ),
       body: ListView(
         children: [
-           Column(
+          Column(
             children: <Widget>[
               info(foodItemDB.getFoodItemsForPet(currentPet).first)
             ],
@@ -118,5 +116,3 @@ class FoodCatalogPage extends ConsumerWidget {
     );
   }
 }
-
-

@@ -1,43 +1,64 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// The data associated with pet schedules.
+class PetScheduleNotifier extends StateNotifier<List<PetScheduleData>> {
+  PetScheduleNotifier(List<PetScheduleData> initialPetSchedules)
+      : super(initialPetSchedules);
+
+  void updateMealTimes(String scheduleID, List<String> newMealTimes) {
+    state = state.map((schedule) {
+      if (schedule.id == scheduleID) {
+        // Provide the pets parameter when calling copyWith
+        return schedule.copyWith(pets: schedule.pets, schedule: newMealTimes);
+      } else {
+        return schedule;
+      }
+    }).toList();
+  }
+}
+
 class PetScheduleData {
   PetScheduleData({
     required this.id,
-    required this.petName,
+    required this.pets,
     required this.schedule,
   });
 
   String id;
-  String petName;
+  List<String> pets;
   List<String> schedule;
+
+  PetScheduleData copyWith({
+    required List<String> pets,
+    required List<String> schedule,
+  }) {
+    return PetScheduleData(
+      id: id,
+      pets: pets,
+      schedule: schedule,
+    );
+  }
 }
 
-/// Provides access to and operations on pet schedule data.
 class PetScheduleDB {
   PetScheduleDB(this.ref);
   final ProviderRef<PetScheduleDB> ref;
 
   final List<PetScheduleData> _petSchedules = [
+    //TODO: Each PetScheduleData should belong to a specific user
     PetScheduleData(
       id: 'schedule-001',
-      petName: 'Spot',
-      schedule: ['T08:30', 'T20:00'],
+      pets: ['Spot', 'Catastrophic', 'Mittens', 'Jeff'],
+      schedule: [
+        'T08:30, T20:00',
+        'T06:30, T20:00',
+        'T21:30',
+        'T08:30, T20:00'
+      ],
     ),
     PetScheduleData(
       id: 'schedule-002',
-      petName: 'Mittens',
-      schedule: ['T21:30'],
-    ),
-    PetScheduleData(
-      id: 'schedule-003',
-      petName: 'Jeff',
-      schedule: ['T08:30', 'T20:30'],
-    ),
-    PetScheduleData(
-      id: 'schedule-004',
-      petName: 'Catastrophic',
-      schedule: ['T06:00', 'T20:00'],
+      pets: ['Cloudy', 'Fluffy'],
+      schedule: ['T08:30, T20:00', 'T06:30, T20:00'],
     ),
   ];
 
@@ -48,7 +69,7 @@ class PetScheduleDB {
 
   List<PetScheduleData> getPetSchedulesByPetName(String petName) {
     return _petSchedules
-        .where((scheduleData) => scheduleData.petName == petName)
+        .where((scheduleData) => scheduleData.pets.contains(petName))
         .toList();
   }
 
