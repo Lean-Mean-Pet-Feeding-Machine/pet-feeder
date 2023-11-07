@@ -5,15 +5,17 @@ import '../../food_item/domain/food_item_db.dart';
 
 class PetData {
   PetData(
-      {required this.id,
-      required this.name,
-      required this.weight,
-      required this.age,
-      required this.species,
-      required this.imagePath,
-      required this.schedule,
-      required this.foodItemData,
-      this.breed});
+      {
+        required this.id,
+        required this.name,
+        required this.weight,
+        required this.age,
+        required this.species,
+        required this.imagePath,
+        required this.schedule,
+        required this.foodItemData,
+        this.breed,
+      });
 
   String id;
   String name;
@@ -24,6 +26,20 @@ class PetData {
   List<String> schedule;
   FoodItemData foodItemData;
   String? breed;
+  double? bcsScore;
+  double? idealWeight;
+
+  double calculateIdealWeight(double bcsScore) {
+    double idealWeight =  bcsScore - 4;
+    idealWeight = idealWeight * 10;
+    idealWeight = idealWeight + 100;
+    idealWeight = 100 / idealWeight;
+    idealWeight = idealWeight * weight.last.$1;
+    this.bcsScore = bcsScore;
+    this.idealWeight = idealWeight;
+    print(this.idealWeight);
+    return idealWeight;
+  }
 }
 
 /// Provides access to and operations on all defined users.
