@@ -56,9 +56,6 @@ class PetInfo extends ConsumerWidget {
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               children: <Widget>[
-                ElevatedButton(onPressed: () => {
-                  pet.calculateIdealWeight(12)
-                  }, child: Text('WHOA')),
                 const SizedBox(height: 80.0),
                 Column(
                   children: <Widget>[
@@ -283,7 +280,15 @@ class PetInfo extends ConsumerWidget {
                     children: [
                       AccordionSection(
                         isOpen: false,
-                        header: Text("BCS"),
+                        header: Center(
+                          child: Text(
+                            'Body condition score',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w200,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
                         content: Column(
                           children: [
                             Image.asset('assets/images/bcs/bcs_dog_chart.png'),
