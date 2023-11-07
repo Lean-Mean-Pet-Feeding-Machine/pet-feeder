@@ -1,10 +1,13 @@
+import 'package:accordion/accordion.dart';
 import 'package:collection/collection.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
 import 'package:pet_feeder/features/common/theme.dart';
 import 'package:pet_feeder/features/common/thememode.dart';
+import 'package:pet_feeder/features/pet/data/pet_provider.dart';
 import '../domain/pet_db.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
@@ -15,13 +18,14 @@ class PetInfo extends ConsumerWidget {
 
   static const String routeName = '/pet-info';
 
-  static final _weightController = TextEditingController();
-  static FocusNode _weightTextBox = FocusNode();
-  static FocusNode _ageTextBox = FocusNode();
-  static FocusNode _scheduleTextBox = FocusNode();
-  static FocusNode _breedTextBox = FocusNode();
+  static final FocusNode _weightTextBox = FocusNode();
+  static final FocusNode _ageTextBox = FocusNode();
+  static final FocusNode _scheduleTextBox = FocusNode();
+  static final FocusNode _breedTextBox = FocusNode();
+  static final _radioKey = GlobalKey<FormBuilderFieldState>();
   static var currentDate = DateTime.now();
   static List<FlSpot> spots = [];
+  static double idealWeight = 0.0;
 
   String getDate(double value) {
     return DateFormat('MM/dd/yy')
@@ -29,19 +33,16 @@ class PetInfo extends ConsumerWidget {
         .toString();
   }
 
-  void printSpots() {
-    spots.forEach((element) {
-      print(element.toString());
-    });
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    idealWeight = pet.idealWeight?? 0.0;
     spots = pet.weight
         .map((e) => FlSpot(e.$2.millisecondsSinceEpoch.toDouble(), e.$1))
         .toList();
+
     final currentThemeMode =
         ref.watch(themeModeProvider); // Watch the theme mode
+    ref.watch(petDBProvider);
 
     return Theme(
         data: currentThemeMode == ThemeModeOption.light
@@ -55,6 +56,9 @@ class PetInfo extends ConsumerWidget {
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               children: <Widget>[
+                ElevatedButton(onPressed: () => {
+                  pet.calculateIdealWeight(12)
+                  }, child: Text('WHOA')),
                 const SizedBox(height: 80.0),
                 Column(
                   children: <Widget>[
@@ -230,6 +234,18 @@ class PetInfo extends ConsumerWidget {
                   width: 100,
                   height: 250,
                   child: LineChart(LineChartData(
+                    extraLinesData: ExtraLinesData(
+                      horizontalLines: [
+                       HorizontalLine(
+                           y: idealWeight * 1.10,
+                           color: Colors.red
+                      ),
+                        HorizontalLine(
+                            y: idealWeight * 0.9,
+                            color: Colors.green
+                        )
+                      ]
+                    ),
                       minX: spots.map((e) => e.x).min - 340000000,
                       maxX: currentDate.millisecondsSinceEpoch.toDouble(),
                       minY: (spots.map((e) => e.y).min - 5).floorToDouble(),
@@ -263,6 +279,51 @@ class PetInfo extends ConsumerWidget {
                         )
                       ])),
                 ),
+                Accordion(
+                    children: [
+                      AccordionSection(
+                        isOpen: false,
+                        header: Text("BCS"),
+                        content: Column(
+                          children: [
+                            Image.asset('assets/images/bcs/bcs_dog_chart.png'),
+                            FormBuilder(
+                              child: Column(
+                                children: [
+                                  FormBuilderRadioGroup(
+                                    key: _radioKey,
+                                    validator: FormBuilderValidators.required(),
+                                    name: 'BCS',
+                                    options: [
+                                      1,
+                                      2,
+                                      3,
+                                      4,
+                                      5,
+                                      6,
+                                      7,
+                                      8,
+                                      9,
+                                    ].map((e) => FormBuilderFieldOption(value: e)).toList()
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      pet.idealWeight ?? 0 * 0.9;
+                                      if (_radioKey.currentState!.validate()) {
+                                        print(_radioKey.currentState?.value);
+                                        idealWeight = pet.calculateIdealWeight(_radioKey.currentState?.value);
+                                      }
+                                    },
+                                    child: Text('Submit'),
+                                  ),
+                                ],
+                              ),
+
+                            ),
+                          ],
+                        ),
+                      ),
+                    ]),
               ],
             ),
           ),
