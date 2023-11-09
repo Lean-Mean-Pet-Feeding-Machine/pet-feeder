@@ -1,42 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pet_feeder/features/authentication/presentation/login.dart';
+import 'package:pet_feeder/features/common/side_menu.dart';
 
 class ForumPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Forum'),
-        automaticallyImplyLeading: false,
-      ),
-      body: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Search forums...',
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () {
-                    // Handle search functionality here
-                  },
+    return Consumer(builder: (context, ref, child) {
+      final currentUser = ref.watch(authProvider);
+
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Forum'),
+        ),
+        drawer: CustomDrawer(
+          currentUser: currentUser,
+        ),
+        body: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'Search forums...',
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () {
+                      // Handle search functionality here
+                    },
+                  ),
                 ),
               ),
             ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: fakePosts.length,
-              itemBuilder: (context, index) {
-                final post = fakePosts[index];
-                return _buildPostItem(
-                    post, index == 0); // Pass true for the first post
-              },
+            Expanded(
+              child: ListView.builder(
+                itemCount: fakePosts.length,
+                itemBuilder: (context, index) {
+                  final post = fakePosts[index];
+                  return _buildPostItem(
+                      post, index == 0); // Pass true for the first post
+                },
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    });
   }
 
   Widget _buildPostItem(Post post, bool showThumbsUp) {

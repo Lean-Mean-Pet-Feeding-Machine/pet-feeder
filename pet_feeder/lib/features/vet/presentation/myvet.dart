@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pet_feeder/features/authentication/presentation/login.dart';
+import 'package:pet_feeder/features/common/side_menu.dart';
 import '../domain/vet_db.dart';
 
 class MyVetMessagingPage extends StatefulWidget {
@@ -20,27 +23,32 @@ class _MyVetMessagingPageState extends State<MyVetMessagingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('My Vet'),
-        automaticallyImplyLeading: false,
-      ),
-      body: Column(
-        children: <Widget>[
-          const SizedBox(height: 12.0),
-          Expanded(
-            child: ListView.builder(
-              itemCount: messages.length,
-              itemBuilder: (context, index) {
-                final message = messages[index];
-                return _buildMessage(message);
-              },
+    return Consumer(builder: (context, ref, child) {
+      final currentUser = ref.watch(authProvider);
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('My Vet'),
+        ),
+        drawer: CustomDrawer(
+          currentUser: currentUser,
+        ),
+        body: Column(
+          children: <Widget>[
+            const SizedBox(height: 12.0),
+            Expanded(
+              child: ListView.builder(
+                itemCount: messages.length,
+                itemBuilder: (context, index) {
+                  final message = messages[index];
+                  return _buildMessage(message);
+                },
+              ),
             ),
-          ),
-          _buildInputField(),
-        ],
-      ),
-    );
+            _buildInputField(),
+          ],
+        ),
+      );
+    });
   }
 
   Widget _buildMessage(Message message) {

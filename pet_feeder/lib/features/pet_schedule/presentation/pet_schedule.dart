@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pet_feeder/features/authentication/presentation/login.dart';
+import 'package:pet_feeder/features/common/side_menu.dart';
 import 'package:pet_feeder/features/pet_schedule/data/pet_schedule_provider.dart';
 import '../domain/pet_schedule_db.dart';
 import 'meal_time_edit_screen.dart';
@@ -19,7 +21,9 @@ class SchedulePage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Schedule'),
-        automaticallyImplyLeading: false,
+      ),
+      drawer: CustomDrawer(
+        currentUser: ref.watch(authProvider),
       ),
       body: ListView.builder(
         itemCount: currentPetSchedule.length,
