@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "447694894462",
+    "project_id": "pet-feeder-b848f",
+    "storage_bucket": "pet-feeder-b848f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:447694894462:android:771fcf5f47c2c25f556f2f",
+        "android_client_info": {
+          "package_name": "com.example.pet_feeder"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmKrxtIAYw1IiifMaA_qOBh7I7_VlksUw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
