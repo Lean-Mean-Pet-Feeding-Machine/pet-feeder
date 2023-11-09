@@ -23,6 +23,7 @@ class _MyVetMessagingPageState extends State<MyVetMessagingPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Vet'),
+        automaticallyImplyLeading: false,
       ),
       body: Column(
         children: <Widget>[

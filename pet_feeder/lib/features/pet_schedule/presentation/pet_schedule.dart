@@ -19,6 +19,7 @@ class SchedulePage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Schedule'),
+        automaticallyImplyLeading: false,
       ),
       body: ListView.builder(
         itemCount: currentPetSchedule.length,

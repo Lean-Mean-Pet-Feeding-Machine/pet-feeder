@@ -6,6 +6,7 @@ class ForumPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Forum'),
+        automaticallyImplyLeading: false,
       ),
       body: Column(
         children: <Widget>[
