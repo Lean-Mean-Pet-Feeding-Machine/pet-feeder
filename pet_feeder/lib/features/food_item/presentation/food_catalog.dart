@@ -8,6 +8,7 @@ import 'package:pet_feeder/features/common/side_menu.dart';
 import 'dart:io';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
+import 'info_form.dart';
 
 class FoodCatalogPage extends StatefulWidget {
   @override
@@ -153,45 +154,33 @@ class _FoodCatalogPageState extends State<FoodCatalogPage> {
           await textRecognizer.processImage(inputImage);
       String text = recognisedText.text;
 
-      // Filter lines containing "Calories," "Protein," and "Fat"
-      List<String> relevantLines = text
-          .split('\n')
-          .where((line) =>
-              line.contains('Calories') ||
-              line.contains('Protein') ||
-              line.contains('Fat'))
-          .toList();
+      // Extract protein, calories, and fat from the text
+      double protein = extractNutrientValue(text, 'Protein');
+      double calories = extractNutrientValue(text, 'Calories');
+      double fat = extractNutrientValue(text, 'Fat');
 
-      // Display the relevant lines in a dialog.
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('Extracted Nutritional Information:'),
-            content: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: relevantLines
-                  .map((line) => Text(
-                        line,
-                        style: TextStyle(fontSize: 16),
-                      ))
-                  .toList(),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text('Close'),
-              ),
-            ],
-          );
-        },
+      // Navigate to the form with extracted values
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => NutritionalInfoForm(
+            protein: protein,
+            calories: calories,
+            fat: fat,
+          ),
+        ),
       );
     } catch (e) {
       print('Error during text recognition: $e');
     } finally {
       textRecognizer.close();
     }
+  }
+
+  // Helper function to extract nutrient values from text
+  double extractNutrientValue(String text, String nutrient) {
+    RegExp regex = RegExp('$nutrient[\\s]*([0-9]+)');
+    Match? match = regex.firstMatch(text);
+    return match != null ? double.parse(match.group(1)!) : 0.0;
   }
 }
