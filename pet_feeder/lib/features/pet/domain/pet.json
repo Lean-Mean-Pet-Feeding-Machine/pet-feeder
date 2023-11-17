@@ -1,0 +1,40 @@
+[
+  {
+    "id": "pet-001",
+    "name": "Spot",
+    "weight": [
+      {
+        "weight": 34.4,
+        "date": "2022-10-22"
+      },
+      {
+        "weight": 36.4,
+        "date": "2022-11-22"
+      },
+      {
+        "weight": 32.4,
+        "date": "2022-12-22"
+      }
+    ],
+    "age": "2022-01-22",
+    "species": "Dog",
+    "imagePath": "assets/images/dog1.png",
+    "schedule": ["20:30", "08:00"],
+    "breed": "Beagle"
+  },
+  {
+    "id": "pet-002",
+    "name": "Mittens",
+    "weight": [
+      {
+        "weight": 12.4,
+        "date": "2019-10-22"
+      }
+    ],
+    "age": "2018-01-22",
+    "species": "Cat",
+    "imagePath": "assets/images/cat1.png",
+    "schedule": ["20:30", "08:00"],
+    "breed": "Siamese Cat"
+  }
+]

@@ -1,14 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'pet_data.dart';
+part of 'pet.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PetDataImpl _$$PetDataImplFromJson(Map<String, dynamic> json) =>
-    _$PetDataImpl(
+_$PetImpl _$$PetImplFromJson(Map<String, dynamic> json) => _$PetImpl(
       id: json['id'] as String,
+      ownerId: json['ownerId'] as String,
       name: json['name'] as String,
       weight: (json['weight'] as List<dynamic>)
           .map((e) => _$recordConvert(
@@ -30,9 +30,9 @@ _$PetDataImpl _$$PetDataImplFromJson(Map<String, dynamic> json) =>
       idealWeight: (json['idealWeight'] as num?)?.toDouble(),
     );
 
-Map<String, dynamic> _$$PetDataImplToJson(_$PetDataImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$PetImplToJson(_$PetImpl instance) => <String, dynamic>{
       'id': instance.id,
+      'ownerId': instance.ownerId,
       'name': instance.name,
       'weight': instance.weight
           .map((e) => {

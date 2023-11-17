@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'pet_data.dart';
+part of 'pet.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,13 +14,14 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-PetData _$PetDataFromJson(Map<String, dynamic> json) {
-  return _PetData.fromJson(json);
+Pet _$PetFromJson(Map<String, dynamic> json) {
+  return _Pet.fromJson(json);
 }
 
 /// @nodoc
-mixin _$PetData {
+mixin _$Pet {
   String get id => throw _privateConstructorUsedError;
+  String get ownerId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   List<(double, DateTime)> get weight => throw _privateConstructorUsedError;
   DateTime get age => throw _privateConstructorUsedError;
@@ -34,16 +35,17 @@ mixin _$PetData {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $PetDataCopyWith<PetData> get copyWith => throw _privateConstructorUsedError;
+  $PetCopyWith<Pet> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $PetDataCopyWith<$Res> {
-  factory $PetDataCopyWith(PetData value, $Res Function(PetData) then) =
-      _$PetDataCopyWithImpl<$Res, PetData>;
+abstract class $PetCopyWith<$Res> {
+  factory $PetCopyWith(Pet value, $Res Function(Pet) then) =
+      _$PetCopyWithImpl<$Res, Pet>;
   @useResult
   $Res call(
       {String id,
+      String ownerId,
       String name,
       List<(double, DateTime)> weight,
       DateTime age,
@@ -57,9 +59,8 @@ abstract class $PetDataCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PetDataCopyWithImpl<$Res, $Val extends PetData>
-    implements $PetDataCopyWith<$Res> {
-  _$PetDataCopyWithImpl(this._value, this._then);
+class _$PetCopyWithImpl<$Res, $Val extends Pet> implements $PetCopyWith<$Res> {
+  _$PetCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -70,6 +71,7 @@ class _$PetDataCopyWithImpl<$Res, $Val extends PetData>
   @override
   $Res call({
     Object? id = null,
+    Object? ownerId = null,
     Object? name = null,
     Object? weight = null,
     Object? age = null,
@@ -85,6 +87,10 @@ class _$PetDataCopyWithImpl<$Res, $Val extends PetData>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      ownerId: null == ownerId
+          ? _value.ownerId
+          : ownerId // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
           ? _value.name
@@ -131,14 +137,14 @@ class _$PetDataCopyWithImpl<$Res, $Val extends PetData>
 }
 
 /// @nodoc
-abstract class _$$PetDataImplCopyWith<$Res> implements $PetDataCopyWith<$Res> {
-  factory _$$PetDataImplCopyWith(
-          _$PetDataImpl value, $Res Function(_$PetDataImpl) then) =
-      __$$PetDataImplCopyWithImpl<$Res>;
+abstract class _$$PetImplCopyWith<$Res> implements $PetCopyWith<$Res> {
+  factory _$$PetImplCopyWith(_$PetImpl value, $Res Function(_$PetImpl) then) =
+      __$$PetImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {String id,
+      String ownerId,
       String name,
       List<(double, DateTime)> weight,
       DateTime age,
@@ -152,17 +158,16 @@ abstract class _$$PetDataImplCopyWith<$Res> implements $PetDataCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$PetDataImplCopyWithImpl<$Res>
-    extends _$PetDataCopyWithImpl<$Res, _$PetDataImpl>
-    implements _$$PetDataImplCopyWith<$Res> {
-  __$$PetDataImplCopyWithImpl(
-      _$PetDataImpl _value, $Res Function(_$PetDataImpl) _then)
+class __$$PetImplCopyWithImpl<$Res> extends _$PetCopyWithImpl<$Res, _$PetImpl>
+    implements _$$PetImplCopyWith<$Res> {
+  __$$PetImplCopyWithImpl(_$PetImpl _value, $Res Function(_$PetImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = null,
+    Object? ownerId = null,
     Object? name = null,
     Object? weight = null,
     Object? age = null,
@@ -174,10 +179,14 @@ class __$$PetDataImplCopyWithImpl<$Res>
     Object? bcsScore = freezed,
     Object? idealWeight = freezed,
   }) {
-    return _then(_$PetDataImpl(
+    return _then(_$PetImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      ownerId: null == ownerId
+          ? _value.ownerId
+          : ownerId // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
           ? _value.name
@@ -225,9 +234,10 @@ class __$$PetDataImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$PetDataImpl implements _PetData {
-  const _$PetDataImpl(
+class _$PetImpl extends _Pet {
+  const _$PetImpl(
       {required this.id,
+      required this.ownerId,
       required this.name,
       required final List<(double, DateTime)> weight,
       required this.age,
@@ -239,13 +249,16 @@ class _$PetDataImpl implements _PetData {
       this.bcsScore,
       this.idealWeight})
       : _weight = weight,
-        _schedule = schedule;
+        _schedule = schedule,
+        super._();
 
-  factory _$PetDataImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PetDataImplFromJson(json);
+  factory _$PetImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PetImplFromJson(json);
 
   @override
   final String id;
+  @override
+  final String ownerId;
   @override
   final String name;
   final List<(double, DateTime)> _weight;
@@ -281,15 +294,16 @@ class _$PetDataImpl implements _PetData {
 
   @override
   String toString() {
-    return 'PetData(id: $id, name: $name, weight: $weight, age: $age, species: $species, imagePath: $imagePath, schedule: $schedule, foodItemId: $foodItemId, breed: $breed, bcsScore: $bcsScore, idealWeight: $idealWeight)';
+    return 'Pet(id: $id, ownerId: $ownerId, name: $name, weight: $weight, age: $age, species: $species, imagePath: $imagePath, schedule: $schedule, foodItemId: $foodItemId, breed: $breed, bcsScore: $bcsScore, idealWeight: $idealWeight)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PetDataImpl &&
+            other is _$PetImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.ownerId, ownerId) || other.ownerId == ownerId) &&
             (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality().equals(other._weight, _weight) &&
             (identical(other.age, age) || other.age == age) &&
@@ -311,6 +325,7 @@ class _$PetDataImpl implements _PetData {
   int get hashCode => Object.hash(
       runtimeType,
       id,
+      ownerId,
       name,
       const DeepCollectionEquality().hash(_weight),
       age,
@@ -325,20 +340,21 @@ class _$PetDataImpl implements _PetData {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$PetDataImplCopyWith<_$PetDataImpl> get copyWith =>
-      __$$PetDataImplCopyWithImpl<_$PetDataImpl>(this, _$identity);
+  _$$PetImplCopyWith<_$PetImpl> get copyWith =>
+      __$$PetImplCopyWithImpl<_$PetImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$PetDataImplToJson(
+    return _$$PetImplToJson(
       this,
     );
   }
 }
 
-abstract class _PetData implements PetData {
-  const factory _PetData(
+abstract class _Pet extends Pet {
+  const factory _Pet(
       {required final String id,
+      required final String ownerId,
       required final String name,
       required final List<(double, DateTime)> weight,
       required final DateTime age,
@@ -348,12 +364,15 @@ abstract class _PetData implements PetData {
       final String? foodItemId,
       final String? breed,
       final double? bcsScore,
-      final double? idealWeight}) = _$PetDataImpl;
+      final double? idealWeight}) = _$PetImpl;
+  const _Pet._() : super._();
 
-  factory _PetData.fromJson(Map<String, dynamic> json) = _$PetDataImpl.fromJson;
+  factory _Pet.fromJson(Map<String, dynamic> json) = _$PetImpl.fromJson;
 
   @override
   String get id;
+  @override
+  String get ownerId;
   @override
   String get name;
   @override
@@ -376,6 +395,6 @@ abstract class _PetData implements PetData {
   double? get idealWeight;
   @override
   @JsonKey(ignore: true)
-  _$$PetDataImplCopyWith<_$PetDataImpl> get copyWith =>
+  _$$PetImplCopyWith<_$PetImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

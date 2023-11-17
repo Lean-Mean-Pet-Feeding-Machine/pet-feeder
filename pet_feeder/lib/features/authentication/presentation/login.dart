@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pet_feeder/features/user/data/user_provider.dart';
+import 'package:pet_feeder/features/user/data/user_providers.dart';
 import 'package:pet_feeder/features/user/domain/user_db.dart';
 import 'signup.dart';
 

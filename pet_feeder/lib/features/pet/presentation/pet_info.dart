@@ -8,11 +8,13 @@ import 'package:intl/intl.dart';
 import 'package:pet_feeder/features/common/theme.dart';
 import 'package:pet_feeder/features/common/thememode.dart';
 import 'package:pet_feeder/features/pet/data/pet_provider.dart';
+import 'package:pet_feeder/features/pet/domain/pet.dart';
+import 'package:pet_feeder/features/pet/presentation/edit_pet_controller.dart';
 import '../domain/pet_db.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class PetInfo extends ConsumerWidget {
-  final PetData pet;
+  final Pet pet;
 
   const PetInfo({Key? key, required this.pet}) : super(key: key);
 
@@ -42,7 +44,7 @@ class PetInfo extends ConsumerWidget {
 
     final currentThemeMode =
         ref.watch(themeModeProvider); // Watch the theme mode
-    ref.watch(petDBProvider);
+    ref.watch(petDatabaseProvider);
 
     return Theme(
         data: currentThemeMode == ThemeModeOption.light
@@ -164,7 +166,18 @@ class PetInfo extends ConsumerWidget {
                                       name: 'breed',
                                       initialValue: pet.breed ?? 'Nothing',
                                       onSubmitted: (value) {
-                                        pet.breed = value;
+                                        Pet tmpPet = Pet(
+                                          id: pet.id,
+                                          ownerId: pet.ownerId,
+                                          name: pet.name,
+                                          weight: pet.weight,
+                                          age: pet.age,
+                                          species: pet.species,
+                                          imagePath: pet.imagePath,
+                                          schedule: pet.schedule,
+                                          breed: value,
+                                        );
+                                        ref.read(editPetControllerProvider.notifier).updatePet(pet: tmpPet, onSuccess: () => print('updated breed'));
                                       },
                                     ),
                                   ))),
@@ -212,7 +225,18 @@ class PetInfo extends ConsumerWidget {
                             opacity: 0,
                             child: FormBuilderDateTimePicker(
                               onChanged: (val) {
-                                pet.age = val as DateTime;
+                                Pet tmpPet = Pet(
+                                  id: pet.id,
+                                  ownerId: pet.ownerId,
+                                  name: pet.name,
+                                  weight: pet.weight,
+                                  age: val as DateTime,
+                                  species: pet.species,
+                                  imagePath: pet.imagePath,
+                                  schedule: pet.schedule,
+                                  breed: pet.breed,
+                                );
+                                ref.read(editPetControllerProvider.notifier).updatePet(pet: tmpPet, onSuccess: () => print('updated age'));
                               },
                               inputType: InputType.date,
                               focusNode: _ageTextBox,

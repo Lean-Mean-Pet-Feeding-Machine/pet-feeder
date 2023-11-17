@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pet_feeder/features/pet/data/pet_provider.dart';
+import 'package:pet_feeder/features/all_data_provider.dart';
+import 'package:pet_feeder/features/loading/loading.dart';
+import 'package:pet_feeder/features/pet/domain/pet.dart';
 import 'package:pet_feeder/features/user/domain/user_db.dart';
 import '../domain/pet_db.dart';
 import 'pet_info.dart';
@@ -15,18 +17,26 @@ class PetListPage extends ConsumerWidget {
 
   static const String routeName = '/petList';
 
-  // List of pet IDs to display
-  final List<String> petIDs = ['pet-001', 'pet-002', 'pet-003', 'pet-004'];
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final petDB = ref.watch(petDBProvider);
-    List<PetData> pets = petDB.getPets(petIDs);
-    final currentThemeMode =
-        ref.watch(themeModeProvider); // Watch the theme mode
+    final AsyncValue<AllData> asyncAllData = ref.watch(allDataProvider);
+    return asyncAllData.when(
+      data: (allData) =>
+          _build(
+            context: context,
+            pets: allData.pets,
+          ),
+      error: (error, st) => Text("hello"),
+      loading: () => const Loading(),
+    );
+  }
 
+  Widget _build({
+    required BuildContext context,
+    required List<Pet> pets,
+}) {
     return Theme(
-      data: currentThemeMode == ThemeModeOption.light
+      data: ThemeModeOption.light == ThemeModeOption.light
           ? lightTheme
           : darkTheme, // Apply appropriate theme based on the currentThemeMode
       child: Scaffold(
@@ -56,7 +66,7 @@ class PetListPage extends ConsumerWidget {
     );
   }
 
-  void navigateToDetails(BuildContext context, PetData pet) {
+  void navigateToDetails(BuildContext context, Pet pet) {
     Navigator.push(
       context,
       MaterialPageRoute(

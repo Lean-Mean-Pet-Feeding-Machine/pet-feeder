@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:pet_feeder/features/user/data/user_provider.dart';
+import 'package:pet_feeder/features/all_data_provider.dart';
 import 'package:pet_feeder/features/user/domain/user_db.dart';
+import 'package:pet_feeder/features/user/data/user_providers.dart';
 
 class SignUpPage extends ConsumerWidget {
   final _formKey = GlobalKey<FormBuilderState>();

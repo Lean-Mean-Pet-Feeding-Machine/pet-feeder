@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:pet_feeder/features/common/settings_view.dart';
+import 'package:pet_feeder/features/pet/domain/pet.dart';
 import 'package:pet_feeder/features/pet/domain/pet_db.dart';
 import 'package:pet_feeder/features/pet/presentation/pet_info.dart';
 import 'package:pet_feeder/features/pet/presentation/pet_list_view.dart';
@@ -54,6 +55,7 @@ class MyApp extends ConsumerWidget {
                 return SettingsView();
               case PetInfo.routeName:
                 PetData petData = routeSettings.arguments as PetData;
+                Pet petData = routeSettings.arguments as Pet;
                 return PetInfo(pet: petData);
               case PetListPage.routeName:
                 UserData? currentUser = routeSettings.arguments as UserData?;
