@@ -54,7 +54,6 @@ class MyApp extends ConsumerWidget {
               case SettingsView.routeName:
                 return SettingsView();
               case PetInfo.routeName:
-                PetData petData = routeSettings.arguments as PetData;
                 Pet petData = routeSettings.arguments as Pet;
                 return PetInfo(pet: petData);
               case PetListPage.routeName:
