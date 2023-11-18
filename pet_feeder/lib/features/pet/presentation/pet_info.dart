@@ -28,6 +28,7 @@ class PetInfo extends ConsumerWidget {
   static var currentDate = DateTime.now();
   static List<FlSpot> spots = [];
   static double idealWeight = 0.0;
+  static List<(double, DateTime)> weights = [];
 
   String getDate(double value) {
     return DateFormat('MM/dd/yy')
@@ -38,7 +39,12 @@ class PetInfo extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     idealWeight = pet.idealWeight?? 0.0;
-    spots = pet.weight
+
+    for (int i = 0; i < pet.weight.length; i++) {
+      weights.add((pet.weight[i], DateTime.parse(pet.when[i])));
+    }
+
+    spots = weights
         .map((e) => FlSpot(e.$2.millisecondsSinceEpoch.toDouble(), e.$1))
         .toList();
 
@@ -104,10 +110,10 @@ class PetInfo extends ConsumerWidget {
                                     child: FormBuilderTextField(
                                       focusNode: _weightTextBox,
                                       initialValue:
-                                          pet.weight.last.$1.toString(),
+                                          weights.last.$1.toString(),
                                       name: 'weightForm',
                                       onSubmitted: (val) {
-                                        pet.weight.insert(pet.weight.length, (
+                                        weights.insert(pet.weight.length, (
                                           double.parse(val.toString()),
                                           currentDate
                                         ));
@@ -136,7 +142,7 @@ class PetInfo extends ConsumerWidget {
                             },
                             child: Center(
                               child: Text(
-                                  '${(currentDate.difference(pet.age).inDays / 365).toStringAsFixed(2)}'),
+                                  '${(currentDate.difference(DateTime.parse(pet.age)).inDays / 365).toStringAsFixed(2)}'),
                             ),
                           ),
                         ),
@@ -171,6 +177,7 @@ class PetInfo extends ConsumerWidget {
                                           ownerId: pet.ownerId,
                                           name: pet.name,
                                           weight: pet.weight,
+                                          when: pet.when,
                                           age: pet.age,
                                           species: pet.species,
                                           imagePath: pet.imagePath,
@@ -230,13 +237,14 @@ class PetInfo extends ConsumerWidget {
                                   ownerId: pet.ownerId,
                                   name: pet.name,
                                   weight: pet.weight,
-                                  age: val as DateTime,
+                                  when: pet.when,
+                                  age: val!.toIso8601String(),
                                   species: pet.species,
                                   imagePath: pet.imagePath,
                                   schedule: pet.schedule,
                                   breed: pet.breed,
                                 );
-                                ref.read(editPetControllerProvider.notifier).updatePet(pet: tmpPet, onSuccess: () => print('updated age'));
+                                ref.read(editPetControllerProvider.notifier).updatePet(pet: tmpPet, onSuccess: () => print('updated'));
                               },
                               inputType: InputType.date,
                               focusNode: _ageTextBox,

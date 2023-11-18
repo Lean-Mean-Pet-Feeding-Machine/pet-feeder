@@ -15,8 +15,9 @@ class Pet with _$Pet {
     required String id,
     required String ownerId,
     required String name,
-    required List<(double, DateTime)> weight,
-    required DateTime age,
+    required List<double> weight,
+    required List<String> when,
+    required String age,
     required String species,
     required String imagePath,
     required List<String> schedule,
@@ -31,47 +32,20 @@ class Pet with _$Pet {
   static Future<List<Pet>> checkInitialPetData() async {
     // String content1 = await rootBundle.loadString('pet.json');
     String content = '''
-    [
-  {
-    "id": "pet-001",
-    "name": "Spot",
-    "weight": [
-      {
-        "weight": 34.4,
-        "date": "2022-10-22"
-      },
-      {
-        "weight": 36.4,
-        "date": "2022-11-22"
-      },
-      {
-        "weight": 32.4,
-        "date": "2022-12-22"
-      }
-    ],
-    "age": "2022-01-22",
-    "species": "Dog",
-    "imagePath": "assets/images/dog1.png",
-    "schedule": ["20:30", "08:00"],
-    "breed": "Beagle"
-  },
+[
   {
     "id": "pet-002",
+    "ownerId": "user-001",
     "name": "Mittens",
-    "weight": [
-      {
-        "weight": 12.4,
-        "date": "2019-10-22"
-      }
-    ],
+    "weight": [12.3],
+    "when": ["2019-01-22T00:00:00Z"],
     "age": "2018-01-22",
     "species": "Cat",
     "imagePath": "assets/images/cat1.png",
     "schedule": ["20:30", "08:00"],
     "breed": "Siamese Cat"
   }
-]
-    ''';
+]''';
     List<dynamic> initialData = json.decode(content);
     return initialData.map((jsonData) => Pet.fromJson(jsonData)).toList();
   }
@@ -81,7 +55,7 @@ class Pet with _$Pet {
     idealWeight = idealWeight * 10;
     idealWeight = idealWeight + 100;
     idealWeight = 100 / idealWeight;
-    idealWeight = idealWeight * weight.last.$1;
+    idealWeight = idealWeight * weight.last;
     return idealWeight;
   }
 }

@@ -23,8 +23,9 @@ mixin _$Pet {
   String get id => throw _privateConstructorUsedError;
   String get ownerId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  List<(double, DateTime)> get weight => throw _privateConstructorUsedError;
-  DateTime get age => throw _privateConstructorUsedError;
+  List<double> get weight => throw _privateConstructorUsedError;
+  List<String> get when => throw _privateConstructorUsedError;
+  String get age => throw _privateConstructorUsedError;
   String get species => throw _privateConstructorUsedError;
   String get imagePath => throw _privateConstructorUsedError;
   List<String> get schedule => throw _privateConstructorUsedError;
@@ -47,8 +48,9 @@ abstract class $PetCopyWith<$Res> {
       {String id,
       String ownerId,
       String name,
-      List<(double, DateTime)> weight,
-      DateTime age,
+      List<double> weight,
+      List<String> when,
+      String age,
       String species,
       String imagePath,
       List<String> schedule,
@@ -74,6 +76,7 @@ class _$PetCopyWithImpl<$Res, $Val extends Pet> implements $PetCopyWith<$Res> {
     Object? ownerId = null,
     Object? name = null,
     Object? weight = null,
+    Object? when = null,
     Object? age = null,
     Object? species = null,
     Object? imagePath = null,
@@ -99,11 +102,15 @@ class _$PetCopyWithImpl<$Res, $Val extends Pet> implements $PetCopyWith<$Res> {
       weight: null == weight
           ? _value.weight
           : weight // ignore: cast_nullable_to_non_nullable
-              as List<(double, DateTime)>,
+              as List<double>,
+      when: null == when
+          ? _value.when
+          : when // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       age: null == age
           ? _value.age
           : age // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as String,
       species: null == species
           ? _value.species
           : species // ignore: cast_nullable_to_non_nullable
@@ -146,8 +153,9 @@ abstract class _$$PetImplCopyWith<$Res> implements $PetCopyWith<$Res> {
       {String id,
       String ownerId,
       String name,
-      List<(double, DateTime)> weight,
-      DateTime age,
+      List<double> weight,
+      List<String> when,
+      String age,
       String species,
       String imagePath,
       List<String> schedule,
@@ -170,6 +178,7 @@ class __$$PetImplCopyWithImpl<$Res> extends _$PetCopyWithImpl<$Res, _$PetImpl>
     Object? ownerId = null,
     Object? name = null,
     Object? weight = null,
+    Object? when = null,
     Object? age = null,
     Object? species = null,
     Object? imagePath = null,
@@ -195,11 +204,15 @@ class __$$PetImplCopyWithImpl<$Res> extends _$PetCopyWithImpl<$Res, _$PetImpl>
       weight: null == weight
           ? _value._weight
           : weight // ignore: cast_nullable_to_non_nullable
-              as List<(double, DateTime)>,
+              as List<double>,
+      when: null == when
+          ? _value._when
+          : when // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       age: null == age
           ? _value.age
           : age // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as String,
       species: null == species
           ? _value.species
           : species // ignore: cast_nullable_to_non_nullable
@@ -239,7 +252,8 @@ class _$PetImpl extends _Pet {
       {required this.id,
       required this.ownerId,
       required this.name,
-      required final List<(double, DateTime)> weight,
+      required final List<double> weight,
+      required final List<String> when,
       required this.age,
       required this.species,
       required this.imagePath,
@@ -249,6 +263,7 @@ class _$PetImpl extends _Pet {
       this.bcsScore,
       this.idealWeight})
       : _weight = weight,
+        _when = when,
         _schedule = schedule,
         super._();
 
@@ -261,16 +276,24 @@ class _$PetImpl extends _Pet {
   final String ownerId;
   @override
   final String name;
-  final List<(double, DateTime)> _weight;
+  final List<double> _weight;
   @override
-  List<(double, DateTime)> get weight {
+  List<double> get weight {
     if (_weight is EqualUnmodifiableListView) return _weight;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_weight);
   }
 
+  final List<String> _when;
   @override
-  final DateTime age;
+  List<String> get when {
+    if (_when is EqualUnmodifiableListView) return _when;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_when);
+  }
+
+  @override
+  final String age;
   @override
   final String species;
   @override
@@ -294,7 +317,7 @@ class _$PetImpl extends _Pet {
 
   @override
   String toString() {
-    return 'Pet(id: $id, ownerId: $ownerId, name: $name, weight: $weight, age: $age, species: $species, imagePath: $imagePath, schedule: $schedule, foodItemId: $foodItemId, breed: $breed, bcsScore: $bcsScore, idealWeight: $idealWeight)';
+    return 'Pet(id: $id, ownerId: $ownerId, name: $name, weight: $weight, when: $when, age: $age, species: $species, imagePath: $imagePath, schedule: $schedule, foodItemId: $foodItemId, breed: $breed, bcsScore: $bcsScore, idealWeight: $idealWeight)';
   }
 
   @override
@@ -306,6 +329,7 @@ class _$PetImpl extends _Pet {
             (identical(other.ownerId, ownerId) || other.ownerId == ownerId) &&
             (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality().equals(other._weight, _weight) &&
+            const DeepCollectionEquality().equals(other._when, _when) &&
             (identical(other.age, age) || other.age == age) &&
             (identical(other.species, species) || other.species == species) &&
             (identical(other.imagePath, imagePath) ||
@@ -328,6 +352,7 @@ class _$PetImpl extends _Pet {
       ownerId,
       name,
       const DeepCollectionEquality().hash(_weight),
+      const DeepCollectionEquality().hash(_when),
       age,
       species,
       imagePath,
@@ -356,8 +381,9 @@ abstract class _Pet extends Pet {
       {required final String id,
       required final String ownerId,
       required final String name,
-      required final List<(double, DateTime)> weight,
-      required final DateTime age,
+      required final List<double> weight,
+      required final List<String> when,
+      required final String age,
       required final String species,
       required final String imagePath,
       required final List<String> schedule,
@@ -376,9 +402,11 @@ abstract class _Pet extends Pet {
   @override
   String get name;
   @override
-  List<(double, DateTime)> get weight;
+  List<double> get weight;
   @override
-  DateTime get age;
+  List<String> get when;
+  @override
+  String get age;
   @override
   String get species;
   @override

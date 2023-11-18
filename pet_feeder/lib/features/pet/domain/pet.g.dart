@@ -11,15 +11,10 @@ _$PetImpl _$$PetImplFromJson(Map<String, dynamic> json) => _$PetImpl(
       ownerId: json['ownerId'] as String,
       name: json['name'] as String,
       weight: (json['weight'] as List<dynamic>)
-          .map((e) => _$recordConvert(
-                e,
-                ($jsonValue) => (
-                  ($jsonValue[r'$1'] as num).toDouble(),
-                  DateTime.parse($jsonValue[r'$2'] as String),
-                ),
-              ))
+          .map((e) => (e as num).toDouble())
           .toList(),
-      age: DateTime.parse(json['age'] as String),
+      when: (json['when'] as List<dynamic>).map((e) => e as String).toList(),
+      age: json['age'] as String,
       species: json['species'] as String,
       imagePath: json['imagePath'] as String,
       schedule:
@@ -34,13 +29,9 @@ Map<String, dynamic> _$$PetImplToJson(_$PetImpl instance) => <String, dynamic>{
       'id': instance.id,
       'ownerId': instance.ownerId,
       'name': instance.name,
-      'weight': instance.weight
-          .map((e) => {
-                r'$1': e.$1,
-                r'$2': e.$2.toIso8601String(),
-              })
-          .toList(),
-      'age': instance.age.toIso8601String(),
+      'weight': instance.weight,
+      'when': instance.when,
+      'age': instance.age,
       'species': instance.species,
       'imagePath': instance.imagePath,
       'schedule': instance.schedule,
@@ -49,9 +40,3 @@ Map<String, dynamic> _$$PetImplToJson(_$PetImpl instance) => <String, dynamic>{
       'bcsScore': instance.bcsScore,
       'idealWeight': instance.idealWeight,
     };
-
-$Rec _$recordConvert<$Rec>(
-  Object? value,
-  $Rec Function(Map) convert,
-) =>
-    convert(value as Map<String, dynamic>);
