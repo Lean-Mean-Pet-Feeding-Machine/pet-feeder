@@ -30,22 +30,7 @@ class Pet with _$Pet {
   factory Pet.fromJson(Map<String, dynamic> json) => _$PetFromJson(json);
 
   static Future<List<Pet>> checkInitialPetData() async {
-    // String content1 = await rootBundle.loadString('pet.json');
-    String content = '''
-[
-  {
-    "id": "pet-002",
-    "ownerId": "user-001",
-    "name": "Mittens",
-    "weight": [12.3],
-    "when": ["2019-01-22T00:00:00Z"],
-    "age": "2018-01-22",
-    "species": "Cat",
-    "imagePath": "assets/images/cat1.png",
-    "schedule": ["20:30", "08:00"],
-    "breed": "Siamese Cat"
-  }
-]''';
+    String content = await rootBundle.loadString('assets/initial_data/pet.json');
     List<dynamic> initialData = json.decode(content);
     return initialData.map((jsonData) => Pet.fromJson(jsonData)).toList();
   }

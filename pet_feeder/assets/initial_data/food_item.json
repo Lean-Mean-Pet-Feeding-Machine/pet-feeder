@@ -1,0 +1,29 @@
+[
+  {
+    "id": "food_item-001",
+    "petId": "pet-001",
+    "userId": "user-001",
+    "imagePath": "assets/images/dog_food/dog_food1.jpg",
+    "calories": 140,
+    "protein": 7.2,
+    "fat": 4.1
+  },
+  {
+    "id": "food_item-003",
+    "petId": "pet-002",
+    "userId": "user-002",
+    "imagePath": "assets/images/dog_food/dog_food2.jpg",
+    "calories": 240,
+    "protein": 9.2,
+    "fat": 2.1
+  },
+  {
+    "id": "food_item-003",
+    "petId": "pet-003",
+    "userId": "user-002",
+    "imagePath": "assets/images/dog_food/dog_food3.jpg",
+    "calories": 500,
+    "protein": 34.2,
+    "fat": 20
+  }
+]

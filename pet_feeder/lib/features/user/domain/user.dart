@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user.freezed.dart';
@@ -18,12 +21,10 @@ class User with _$User {
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
-  // String id;
-  // String email;
-  // String userName;
-  // String password;
-  // String? imagePath; // Path to user profile picture (pfp)
-  // String? zipCode;
-  // List<String>? schedule;
-  // List<String>? pets; // List of pets the user owns
+  static Future<List<User>> checkInitialUserData() async {
+    String content = await rootBundle.loadString('assets/initial_data/user.json');
+    List<dynamic> initialData = json.decode(content);
+    return initialData.map((jsonData) => User.fromJson(jsonData)).toList();
+  }
+
 }
