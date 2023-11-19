@@ -30,8 +30,8 @@ class _MyVetMessagingPageState extends State<MyVetMessagingPage> {
           title: const Text('My Vet'),
         ),
         drawer: CustomDrawer(
-          currentUser: currentUser,
-        ),
+            // currentUser: currentUser,
+            ),
         body: Column(
           children: <Widget>[
             const SizedBox(height: 12.0),

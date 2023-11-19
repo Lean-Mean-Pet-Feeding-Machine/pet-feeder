@@ -13,9 +13,7 @@ class ForumPage extends StatelessWidget {
         appBar: AppBar(
           title: Text('Forum'),
         ),
-        drawer: CustomDrawer(
-          currentUser: currentUser,
-        ),
+        drawer: CustomDrawer(),
         body: Column(
           children: <Widget>[
             Padding(

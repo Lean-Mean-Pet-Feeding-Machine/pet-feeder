@@ -36,18 +36,18 @@ class MyApp extends ConsumerWidget {
       routes: {
         '/login': (context) => LoginPage(),
         '/signup': (context) => SignUpPage(),
-        '/drawer': (context) {
-          // Extract the arguments passed to the route
-          final UserData? currentUser =
-          ModalRoute.of(context)!.settings.arguments as UserData?;
+        // '/drawer': (context) {
+        //   // Extract the arguments passed to the route
+        //   final UserData? currentUser =
+        //       ModalRoute.of(context)!.settings.arguments as UserData?;
 
-          // Return the CustomDrawer widget with the extracted user data
-          return CustomDrawer(currentUser: currentUser);
-        },
+        //   // Return the CustomDrawer widget with the extracted user data
+        //   return CustomDrawer(currentUser: currentUser);
+        // },
+        '/drawer': (context) => CustomDrawer(),
         '/pet-info': (context) {
           // Extract the arguments passed to the route
-          final Pet pet =
-          ModalRoute.of(context)!.settings.arguments as Pet;
+          final Pet pet = ModalRoute.of(context)!.settings.arguments as Pet;
 
           // Return the PetInfo widget with the extracted pet data
           return PetInfo(pet: pet);
@@ -60,7 +60,7 @@ class MyApp extends ConsumerWidget {
         '/navbar': (context) {
           // Extract the arguments passed to the route
           final UserData? loggedInUser =
-          ModalRoute.of(context)!.settings.arguments as UserData?;
+              ModalRoute.of(context)!.settings.arguments as UserData?;
 
           // Return the BottomNavbar widget with the extracted user data
           return BottomNavbar(currentUser: loggedInUser);

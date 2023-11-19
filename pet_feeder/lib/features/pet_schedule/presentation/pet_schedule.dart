@@ -23,8 +23,8 @@ class SchedulePage extends ConsumerWidget {
         title: Text('Schedule'),
       ),
       drawer: CustomDrawer(
-        currentUser: ref.watch(authProvider),
-      ),
+          // currentUser: ref.watch(authProvider),
+          ),
       body: ListView.builder(
         itemCount: currentPetSchedule.length,
         itemBuilder: (context, index) {

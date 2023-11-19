@@ -21,11 +21,10 @@ class PetListPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<AllData> asyncAllData = ref.watch(allDataProvider);
     return asyncAllData.when(
-      data: (allData) =>
-          _build(
-            context: context,
-            pets: allData.pets,
-          ),
+      data: (allData) => _build(
+        context: context,
+        pets: allData.pets,
+      ),
       error: (error, st) => Text(error.toString()),
       loading: () => const Loading(),
     );
@@ -34,7 +33,7 @@ class PetListPage extends ConsumerWidget {
   Widget _build({
     required BuildContext context,
     required List<Pet> pets,
-}) {
+  }) {
     return Theme(
       data: ThemeModeOption.light == ThemeModeOption.light
           ? lightTheme
@@ -44,8 +43,8 @@ class PetListPage extends ConsumerWidget {
           title: const Text('Pet List'),
         ),
         drawer: CustomDrawer(
-          currentUser: currentUser,
-        ),
+            // currentUser: currentUser,
+            ),
         body: ListView.builder(
           itemCount: pets.length,
           itemBuilder: (context, index) {

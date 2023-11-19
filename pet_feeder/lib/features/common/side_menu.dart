@@ -1,13 +1,20 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pet_feeder/features/authentication/presentation/login.dart';
 import 'package:pet_feeder/features/user/domain/user_db.dart';
+import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatelessWidget {
-  final UserData? currentUser;
-
-  const CustomDrawer({required this.currentUser});
-
   @override
   Widget build(BuildContext context) {
+    // Access the current user from Firebase Authentication
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    final User? firebaseUser = _auth.currentUser;
+
+    // Access the currentUser from the context using the provider
+    final UserData? currentUser = context.read();
+
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -25,13 +32,13 @@ class CustomDrawer extends StatelessWidget {
                   backgroundImage: AssetImage(currentUser?.imagePath ?? ''),
                 ),
                 SizedBox(height: 10),
-                // Display the user's name and email
+                // Display the user's name (there's no name on Firebase yet)
                 Text(
                   currentUser?.userName ?? 'Guest',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  currentUser?.email ?? '',
+                  firebaseUser?.email ?? '', // Access the email from Firebase
                   style: TextStyle(fontSize: 14),
                 ),
               ],

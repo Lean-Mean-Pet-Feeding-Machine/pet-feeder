@@ -40,8 +40,8 @@ class _FoodCatalogPageState extends State<FoodCatalogPage> {
           title: Text('Food Catalog'),
         ),
         drawer: CustomDrawer(
-          currentUser: currentUser,
-        ),
+            // currentUser: currentUser,
+            ),
         body: ListView(
           children: [
             Column(
