@@ -125,6 +125,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:pet_feeder/features/user/data/user_providers.dart';
+import 'package:pet_feeder/features/user/domain/user.dart' as user;
 import 'package:pet_feeder/features/user/domain/user_db.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -216,8 +217,10 @@ class SignUpPage extends ConsumerWidget {
                                   _formKey.currentState?.value['password'],
                             );
 
+
+
                             // Convert the Firebase User to UserData
-                            UserData userData = UserData(
+                            user.User userData = user.User(
                               id: userCredential.user?.uid ?? '',
                               email: userCredential.user?.email ?? '',
                               userName:
@@ -226,10 +229,11 @@ class SignUpPage extends ConsumerWidget {
                               password:
                                   _formKey.currentState?.value['password'] ??
                                       '',
+                              zipCode: _formKey.currentState?.value['zipcode'] ?? '',
                             );
 
                             // Add user to userDB
-                            userDB.addUser(userData);
+                            ref.watch(userDatabaseProvider).setUser(userData);
 
                             // Navigate to the next screen
                             Navigator.pushReplacementNamed(context, '/navbar');

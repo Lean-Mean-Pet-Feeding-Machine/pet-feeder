@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_feeder/features/all_data_provider.dart';
 import 'package:pet_feeder/features/loading/loading.dart';
+import 'package:pet_feeder/features/pet/data/pet_provider.dart';
 import 'package:pet_feeder/features/pet/domain/pet.dart';
+import 'package:pet_feeder/features/user/data/user_providers.dart';
 import 'package:pet_feeder/features/user/domain/user_db.dart';
+import 'package:provider/provider.dart';
+import '../../user/domain/user.dart';
 import '../domain/pet_db.dart';
 import 'pet_info.dart';
 import 'package:pet_feeder/features/common/side_menu.dart';
@@ -24,7 +28,10 @@ class PetListPage extends ConsumerWidget {
       data: (allData) =>
           _build(
             context: context,
-            pets: allData.pets,
+            pets: allData.pets.where((e) => e.ownerId == allData.currentUserID).toList(),
+            uid: allData.currentUserID,
+            currentUser: allData.currentUser,
+            ref: ref,
           ),
       error: (error, st) => Text(st.toString()),
       loading: () => const Loading(),
@@ -34,6 +41,9 @@ class PetListPage extends ConsumerWidget {
   Widget _build({
     required BuildContext context,
     required List<Pet> pets,
+    required String? uid,
+    required User currentUser,
+    required WidgetRef ref,
   }) {
     return Theme(
       data: ThemeModeOption.light == ThemeModeOption.light
@@ -50,6 +60,7 @@ class PetListPage extends ConsumerWidget {
           itemCount: pets.length,
           itemBuilder: (context, index) {
             final pet = pets[index];
+            print(pet.toString());
             return ListTile(
               leading: CircleAvatar(
                 backgroundImage: AssetImage(pet.imagePath),
@@ -75,3 +86,18 @@ class PetListPage extends ConsumerWidget {
     );
   }
 }
+// ElevatedButton(
+//             onpressed: () => {
+//               ref.watch(petdatabaseprovider).setpetdata(pet(
+//                 id: 'pet-004',
+//                 ownerid: uid!,
+//                 name: 'jeff',
+//                 weight: [],
+//                 when: [],
+//                 age: "2023-11-19t12:00:00z",
+//                 species: 'dog',
+//                 imagepath: 'assets/images/dog4.png',
+//                 schedule: [],
+//               ))
+//             },
+//             child: text('hello')),

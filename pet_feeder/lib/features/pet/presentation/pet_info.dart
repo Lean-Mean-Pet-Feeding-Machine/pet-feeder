@@ -52,12 +52,12 @@ class PetInfo extends ConsumerWidget {
     return asyncAllData.when(
         data: (allData) => _build(
           context: context,
-          pets: allData.pets,
+          // pets: allData.pets,
           pet: pet,
           // users: allData.users,
           ref: ref,
         ),
-        error: (error, st) => Text(st.toString()),
+        error: (error, st) => Text(error.toString()),
         loading: () => Loading(),
     );
   }
@@ -67,7 +67,7 @@ class PetInfo extends ConsumerWidget {
         required BuildContext context,
         required WidgetRef ref,
         required Pet pet,
-        required List<Pet> pets,
+        // required List<Pet> pets,
         // required List<User> users,
       }) {
     List<(double, DateTime)> weights = [];

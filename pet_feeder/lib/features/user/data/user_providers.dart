@@ -27,7 +27,7 @@ String currentUserID(CurrentUserIDRef ref) {
 
 @riverpod
 Future<User> currentUser(CurrentUserRef ref) async {
-  final String currentUserId = ref.watch(currentUserIDProvider);
+  final String currentUserId = ref.watch(firebaseAuthProvider).currentUser!.uid;
   final database = ref.watch(userDatabaseProvider);
   return await database.fetchUser(currentUserId);
 }
