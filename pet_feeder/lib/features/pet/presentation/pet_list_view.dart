@@ -21,11 +21,12 @@ class PetListPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<AllData> asyncAllData = ref.watch(allDataProvider);
     return asyncAllData.when(
-      data: (allData) => _build(
-        context: context,
-        pets: allData.pets,
-      ),
-      error: (error, st) => Text(error.toString()),
+      data: (allData) =>
+          _build(
+            context: context,
+            pets: allData.pets,
+          ),
+      error: (error, st) => Text(st.toString()),
       loading: () => const Loading(),
     );
   }

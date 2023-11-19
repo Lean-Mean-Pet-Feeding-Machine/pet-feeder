@@ -5,11 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
+import 'package:pet_feeder/features/all_data_provider.dart';
 import 'package:pet_feeder/features/common/theme.dart';
 import 'package:pet_feeder/features/common/thememode.dart';
+import 'package:pet_feeder/features/loading/loading.dart';
 import 'package:pet_feeder/features/pet/data/pet_provider.dart';
 import 'package:pet_feeder/features/pet/domain/pet.dart';
 import 'package:pet_feeder/features/pet/presentation/edit_pet_controller.dart';
+import 'package:pet_feeder/features/user/domain/user.dart';
 import '../domain/pet_db.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
@@ -26,9 +29,6 @@ class PetInfo extends ConsumerWidget {
   static final FocusNode _breedTextBox = FocusNode();
   static final _radioKey = GlobalKey<FormBuilderFieldState>();
   static var currentDate = DateTime.now();
-  static List<FlSpot> spots = [];
-  static double idealWeight = 0.0;
-  static List<(double, DateTime)> weights = [];
 
   String getDate(double value) {
     return DateFormat('MM/dd/yy')
@@ -36,9 +36,48 @@ class PetInfo extends ConsumerWidget {
         .toString();
   }
 
+  double calculateIdealWeight(double bcsScore, List<double> weight) {
+    double idealWeight =  bcsScore - 4;
+    idealWeight = idealWeight * 10;
+    idealWeight = idealWeight + 100;
+    idealWeight = 100 / idealWeight;
+    idealWeight = idealWeight * weight.last;
+    return idealWeight;
+  }
+
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    idealWeight = pet.idealWeight?? 0.0;
+    final AsyncValue<AllData> asyncAllData = ref.watch(allDataProvider);
+    return asyncAllData.when(
+        data: (allData) => _build(
+          context: context,
+          pets: allData.pets,
+          pet: pet,
+          // users: allData.users,
+          ref: ref,
+        ),
+        error: (error, st) => Text(st.toString()),
+        loading: () => Loading(),
+    );
+  }
+
+  Widget _build(
+      {
+        required BuildContext context,
+        required WidgetRef ref,
+        required Pet pet,
+        required List<Pet> pets,
+        // required List<User> users,
+      }) {
+    List<(double, DateTime)> weights = [];
+    double idealWeight = 0;
+    if (pet.weight.isNotEmpty && pet.bcsScore != null) {
+      idealWeight = calculateIdealWeight(pet.bcsScore!, pet.weight);
+    }
+
+    print(idealWeight);
+    List<FlSpot> spots = [];
 
     for (int i = 0; i < pet.weight.length; i++) {
       weights.add((pet.weight[i], DateTime.parse(pet.when[i])));
@@ -112,12 +151,26 @@ class PetInfo extends ConsumerWidget {
                                       initialValue:
                                           weights.last.$1.toString(),
                                       name: 'weightForm',
-                                      onSubmitted: (val) {
-                                        weights.insert(pet.weight.length, (
-                                          double.parse(val.toString()),
-                                          currentDate
-                                        ));
-                                        print(pet.weight.last.toString());
+                                      onSubmitted: (value) {
+                                        List<double> tmpWeight = [...pet.weight];
+                                        List<String> tmpWhen = [...pet.when];
+                                        tmpWeight.add(double.parse(value!));
+                                        tmpWhen.add(DateTime.now().toIso8601String());
+                                        Pet tmpPet = Pet(
+                                          id: pet.id,
+                                          ownerId: pet.ownerId,
+                                          name: pet.name,
+                                          weight: tmpWeight,
+                                          when: tmpWhen,
+                                          age: pet.age,
+                                          species: pet.species,
+                                          imagePath: pet.imagePath,
+                                          schedule: pet.schedule,
+                                          breed: pet.breed,
+                                        );
+                                        ref.read(editPetControllerProvider.notifier).updatePet(
+                                            pet: tmpPet, onSuccess: () => print('updated weight')
+                                        );
                                       },
                                     ),
                                   ),
@@ -184,7 +237,9 @@ class PetInfo extends ConsumerWidget {
                                           schedule: pet.schedule,
                                           breed: value,
                                         );
-                                        ref.read(editPetControllerProvider.notifier).updatePet(pet: tmpPet, onSuccess: () => print('updated breed'));
+                                        ref.read(editPetControllerProvider.notifier).updatePet(
+                                            pet: tmpPet, onSuccess: () => print('updated breed')
+                                        );
                                       },
                                     ),
                                   ))),
@@ -244,7 +299,9 @@ class PetInfo extends ConsumerWidget {
                                   schedule: pet.schedule,
                                   breed: pet.breed,
                                 );
-                                ref.read(editPetControllerProvider.notifier).updatePet(pet: tmpPet, onSuccess: () => print('updated'));
+                                ref.read(editPetControllerProvider.notifier).updatePet(
+                                    pet: tmpPet, onSuccess: () => print('updated')
+                                );
                               },
                               inputType: InputType.date,
                               focusNode: _ageTextBox,
@@ -349,6 +406,23 @@ class PetInfo extends ConsumerWidget {
                                       if (_radioKey.currentState!.validate()) {
                                         print(_radioKey.currentState?.value);
                                         idealWeight = pet.calculateIdealWeight(_radioKey.currentState?.value);
+                                        Pet tmpPet = Pet(
+                                          id: pet.id,
+                                          ownerId: pet.ownerId,
+                                          name: pet.name,
+                                          weight: pet.weight,
+                                          when: pet.when,
+                                          age: pet.age,
+                                          species: pet.species,
+                                          imagePath: pet.imagePath,
+                                          schedule: pet.schedule,
+                                          breed: pet.breed,
+                                          bcsScore: _radioKey.currentState?.value,
+                                        );
+                                        ref.read(editPetControllerProvider.notifier).updatePet(
+                                            pet: tmpPet, onSuccess: () => print('updated bcs score')
+                                        );
+
                                       }
                                     },
                                     child: Text('Submit'),

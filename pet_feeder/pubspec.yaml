@@ -36,6 +36,7 @@ dependencies:
   permission_handler: ^11.0.1
   google_ml_kit: ^0.16.3
   image_picker: ^1.0.4
+  flutter_native_splash: ^2.3.5
 
 dev_dependencies:
   flutter_test:
@@ -65,6 +66,7 @@ flutter:
     - assets/images/user_pfp/user3.jpg
     - assets/images/bcs/bcs_cat_chart.png
     - assets/images/bcs/bcs_dog_chart.png
+    - assets/initial_data/
 
   fonts:
     - family: Pacifico
