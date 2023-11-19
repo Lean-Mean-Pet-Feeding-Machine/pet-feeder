@@ -26,7 +26,7 @@ class PetListPage extends ConsumerWidget {
             context: context,
             pets: allData.pets,
           ),
-      error: (error, st) => Text(error.toString()),
+      error: (error, st) => Text(st.toString()),
       loading: () => const Loading(),
     );
   }
