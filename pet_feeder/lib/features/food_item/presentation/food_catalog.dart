@@ -39,9 +39,7 @@ class _FoodCatalogPageState extends State<FoodCatalogPage> {
         appBar: AppBar(
           title: Text('Food Catalog'),
         ),
-        drawer: CustomDrawer(
-            // currentUser: currentUser,
-            ),
+        drawer: CustomDrawer(),
         body: ListView(
           children: [
             Column(

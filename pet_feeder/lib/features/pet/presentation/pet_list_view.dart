@@ -25,14 +25,15 @@ class PetListPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<AllData> asyncAllData = ref.watch(allDataProvider);
     return asyncAllData.when(
-      data: (allData) =>
-          _build(
-            context: context,
-            pets: allData.pets.where((e) => e.ownerId == allData.currentUserID).toList(),
-            uid: allData.currentUserID,
-            currentUser: allData.currentUser,
-            ref: ref,
-          ),
+      data: (allData) => _build(
+        context: context,
+        pets: allData.pets
+            .where((e) => e.ownerId == allData.currentUserID)
+            .toList(),
+        uid: allData.currentUserID,
+        currentUser: allData.currentUser,
+        ref: ref,
+      ),
       error: (error, st) => Text(st.toString()),
       loading: () => const Loading(),
     );
@@ -53,9 +54,7 @@ class PetListPage extends ConsumerWidget {
         appBar: AppBar(
           title: const Text('Pet List'),
         ),
-        drawer: CustomDrawer(
-            // currentUser: currentUser,
-            ),
+        drawer: CustomDrawer(),
         body: ListView.builder(
           itemCount: pets.length,
           itemBuilder: (context, index) {

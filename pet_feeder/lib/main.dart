@@ -40,14 +40,6 @@ class MyApp extends ConsumerWidget {
       routes: {
         '/login': (context) => LoginPage(),
         '/signup': (context) => SignUpPage(),
-        // '/drawer': (context) {
-        //   // Extract the arguments passed to the route
-        //   final UserData? currentUser =
-        //       ModalRoute.of(context)!.settings.arguments as UserData?;
-
-        //   // Return the CustomDrawer widget with the extracted user data
-        //   return CustomDrawer(currentUser: currentUser);
-        // },
         '/drawer': (context) => CustomDrawer(),
         '/pet-info': (context) {
           // Extract the arguments passed to the route
