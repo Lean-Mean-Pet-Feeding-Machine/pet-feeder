@@ -46,6 +46,12 @@ dev_dependencies:
   freezed: ^2.4.5
   json_serializable: ^6.7.1
   riverpod_generator: ^2.3.6
+  flutter_launcher_icons: ^0.13.1
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/main_logo.png"
 
 flutter:
   uses-material-design: true
