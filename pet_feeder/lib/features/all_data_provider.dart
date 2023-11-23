@@ -22,7 +22,7 @@ class AllData {
   final List<Pet> pets;
   final List<User> users;
   final String? currentUserID;
-  final User currentUser;
+  final User? currentUser;
 }
 
 @riverpod

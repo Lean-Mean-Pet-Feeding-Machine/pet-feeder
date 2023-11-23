@@ -233,7 +233,7 @@ class SignUpPage extends ConsumerWidget {
                             );
 
                             // Add user to userDB
-                            ref.watch(userDatabaseProvider).setUser(userData);
+                            ref.read(userDatabaseProvider).setUser(userData);
 
                             // Navigate to the next screen
                             Navigator.pushReplacementNamed(context, '/navbar');

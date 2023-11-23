@@ -6,7 +6,7 @@ part of 'all_data_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$allDataHash() => r'3b3ddd979cfd046911f29b10dd35240ee979766d';
+String _$allDataHash() => r'79d8ba5c088343d4bfc43daefe4ae4c9a96e892b';
 
 /// See also [allData].
 @ProviderFor(allData)

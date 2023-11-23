@@ -179,7 +179,6 @@ class PetInfo extends ConsumerWidget {
                             ),
                           )),
                         ),
-                        const SizedBox(height: 5.0),
                         Text('Age'),
                         Container(
                           width: 120,
@@ -201,10 +200,10 @@ class PetInfo extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(width: 50),
+                    const SizedBox(width: 5),
                     Column(
                       children: [
-                        const SizedBox(height: 12.0),
+                        Text("Breed"),
                         Container(
                           width: 120,
                           height: 60,
@@ -244,7 +243,7 @@ class PetInfo extends ConsumerWidget {
                                     ),
                                   ))),
                         ),
-                        const SizedBox(height: 12.0),
+                        Text("Schedule"),
                         Container(
                           width: 120,
                           height: 60,

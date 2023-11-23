@@ -17,7 +17,7 @@ import 'package:pet_feeder/features/common/thememode.dart';
 class PetListPage extends ConsumerWidget {
   final UserData? currentUser;
 
-  PetListPage({Key? key, required this.currentUser}) : super(key: key);
+  const PetListPage({Key? key, required this.currentUser}) : super(key: key);
 
   static const String routeName = '/petList';
 
@@ -28,13 +28,13 @@ class PetListPage extends ConsumerWidget {
       data: (allData) => _build(
         context: context,
         pets: allData.pets
-            .where((e) => e.ownerId == allData.currentUserID)
+            .where((pet) => pet.ownerId == allData.currentUserID)
             .toList(),
         uid: allData.currentUserID,
-        currentUser: allData.currentUser,
+        user: allData.currentUser,
         ref: ref,
       ),
-      error: (error, st) => Text(st.toString()),
+      error: (error, st) => Text(error.toString()),
       loading: () => const Loading(),
     );
   }
@@ -43,7 +43,7 @@ class PetListPage extends ConsumerWidget {
     required BuildContext context,
     required List<Pet> pets,
     required String? uid,
-    required User currentUser,
+    required User? user,
     required WidgetRef ref,
   }) {
     return Theme(
@@ -53,6 +53,13 @@ class PetListPage extends ConsumerWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Pet List'),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => {
+            print(uid)
+          },
+          child: Icon(Icons.add),
+
         ),
         drawer: CustomDrawer(),
         body: ListView.builder(
