@@ -11,6 +11,7 @@ import 'package:pet_feeder/features/common/bottom_navbar.dart';
 import 'package:pet_feeder/features/forum/presentation/forum.dart';
 import 'package:pet_feeder/features/pet/domain/pet.dart';
 import 'package:pet_feeder/features/pet/domain/pet_db.dart';
+import 'package:pet_feeder/features/pet/presentation/add_pet_view.dart';
 import 'package:pet_feeder/features/pet/presentation/pet_info.dart';
 import 'package:pet_feeder/features/common/side_menu.dart';
 import 'package:pet_feeder/features/pet_schedule/presentation/pet_schedule.dart';
@@ -62,6 +63,7 @@ class MyApp extends ConsumerWidget {
           return BottomNavbar(currentUser: loggedInUser);
         },
         '/settings': (context) => SettingsView(),
+        '/addPetView': (context) => AddPetView(),
       },
     );
   }

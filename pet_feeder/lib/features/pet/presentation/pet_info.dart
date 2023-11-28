@@ -148,8 +148,7 @@ class PetInfo extends ConsumerWidget {
                                   child: Center(
                                     child: FormBuilderTextField(
                                       focusNode: _weightTextBox,
-                                      initialValue:
-                                          weights.last.$1.toString(),
+                                      initialValue: weights.isNotEmpty ? weights.last.$1.toString() : 'Nope',
                                       name: 'weightForm',
                                       onSubmitted: (value) {
                                         List<double> tmpWeight = [...pet.weight];
@@ -315,6 +314,7 @@ class PetInfo extends ConsumerWidget {
                   ],
                 ),
                 const SizedBox(height: 20.0),
+                weights.isNotEmpty ?
                 SizedBox(
                   width: 100,
                   height: 250,
@@ -363,7 +363,7 @@ class PetInfo extends ConsumerWidget {
                           isCurved: false,
                         )
                       ])),
-                ),
+                ) : SizedBox(),
                 Accordion(
                     children: [
                       AccordionSection(
