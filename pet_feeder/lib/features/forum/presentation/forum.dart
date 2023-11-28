@@ -24,14 +24,28 @@ class ForumPage extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search forums...',
-                    suffixIcon: IconButton(
-                      icon: Icon(Icons.search),
-                      onPressed: () {
-                        // Handle search functionality here
-                      },
+                child: InkWell(
+                  onTap: () {
+                    _performSearch(context);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 12.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(Icons.search),
+                        SizedBox(width: 8.0),
+                        Text(
+                          'Search forums...',
+                          style: TextStyle(
+                            color:
+                                Theme.of(context).textTheme.titleMedium!.color,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -41,8 +55,7 @@ class ForumPage extends StatelessWidget {
                   itemCount: fakePosts.length,
                   itemBuilder: (context, index) {
                     final post = fakePosts[index];
-                    return _buildPostItem(
-                        post, index == 0); // Pass true for the first post
+                    return PostItem(post, index == 0);
                   },
                 ),
               ),
@@ -53,7 +66,22 @@ class ForumPage extends StatelessWidget {
     });
   }
 
-  Widget _buildPostItem(Post post, bool showThumbsUp) {
+  void _performSearch(BuildContext context) {
+    showSearch(
+      context: context,
+      delegate: PostSearchDelegate(fakePosts),
+    );
+  }
+}
+
+class PostItem extends StatelessWidget {
+  final Post post;
+  final bool showThumbsUp;
+
+  PostItem(this.post, this.showThumbsUp);
+
+  @override
+  Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
         Container(
@@ -81,7 +109,7 @@ class ForumPage extends StatelessWidget {
                 spacing: 8.0,
                 children: post.tags.map((tag) {
                   return Chip(
-                    label: Text('#$tag'), // Tag
+                    label: Text('#$tag'),
                   );
                 }).toList(),
               ),
@@ -94,15 +122,14 @@ class ForumPage extends StatelessWidget {
           child: Row(
             children: [
               IconButton(
-                icon: Icon(Icons.arrow_upward), // Upvote button
+                icon: Icon(Icons.arrow_upward),
                 onPressed: () {
                   // Handle upvote functionality here
                 },
               ),
-              Text(
-                  '0'), // Upvote count (you can replace it with the actual count)
+              Text('0'),
               IconButton(
-                icon: Icon(Icons.arrow_downward), // Downvote button
+                icon: Icon(Icons.arrow_downward),
                 onPressed: () {
                   // Handle downvote functionality here
                 },
@@ -117,7 +144,7 @@ class ForumPage extends StatelessWidget {
             child: Tooltip(
               message: 'Vet Approved',
               child: Icon(
-                Icons.thumb_up, // Thumbs up icon
+                Icons.thumb_up,
                 color: Colors.blue,
                 size: 30.0,
               ),
@@ -125,6 +152,63 @@ class ForumPage extends StatelessWidget {
           ),
       ],
     );
+  }
+}
+
+class PostSearchDelegate extends SearchDelegate<List<Post>> {
+  final List<Post> allPosts;
+
+  PostSearchDelegate(this.allPosts);
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, []);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    final results = searchPosts(query);
+    return _buildSearchResults(results);
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    final results = searchPosts(query);
+    return _buildSearchResults(results);
+  }
+
+  Widget _buildSearchResults(List<Post> results) {
+    return ListView.builder(
+      itemCount: results.length,
+      itemBuilder: (context, index) {
+        final post = results[index];
+        return PostItem(post, index == 0);
+      },
+    );
+  }
+
+  List<Post> searchPosts(String query) {
+    return allPosts.where((post) {
+      // Check if the post's text contains the search query
+      return post.text.toLowerCase().contains(query.toLowerCase());
+    }).toList();
   }
 }
 
@@ -140,18 +224,47 @@ class Post {
   });
 }
 
-// Sample data for testing
+// Sample data
 List<Post> fakePosts = [
   Post(
-      username: 'Mark',
-      text: 'This is a post about dogs.',
-      tags: ['dog', 'pet', 'breed']),
+    username: 'PetLover123',
+    text:
+        'My dog is overweight, and I need advice on creating a weight loss diet plan. Any tips?',
+    tags: ['dog', 'pet', 'weight-loss', 'diet'],
+  ),
   Post(
-      username: 'Elon',
-      text: 'Looking for advice on dog care.',
-      tags: ['dog', 'pet', 'care']),
+    username: 'Mark',
+    text:
+        'Looking for low-calorie cat treats. Any recommendations to keep my cat healthy?',
+    tags: ['cat', 'pet', 'treats', 'nutrition'],
+  ),
   Post(
-      username: 'Bob',
-      text: "How do I know my dog's breed??",
-      tags: ['breed', 'pet']),
+    username: 'CatMom4ever',
+    text:
+        'I have 3 cats, two are severely overweight and one is diabetic and I need to find a way to feed them separately to keep track of their health. Does anyone have any tips?',
+    tags: ['dog', 'pet', 'exercise', 'fitness'],
+  ),
+  Post(
+    username: 'Elon',
+    text:
+        'My cat refuses to eat the prescribed diet for weight management. Any suggestions to make it more appealing?',
+    tags: ['cat', 'pet', 'obesity', 'diet'],
+  ),
+  Post(
+    username: 'Newbie',
+    text:
+        "Just adopted a puppy! What's the best puppy food for healthy growth and development?",
+    tags: ['dog', 'pet', 'puppy', 'nutrition'],
+  ),
+  Post(
+    username: 'SeniorPetCare',
+    text:
+        'Tips on caring for senior dogs and cats, especially regarding their diet and exercise routine.',
+    tags: ['dog', 'cat', 'senior-pet', 'care'],
+  ),
+  Post(
+    username: 'John2',
+    text: 'What food brands do you recommend for a 6 month old puppy?',
+    tags: ['dog'],
+  ),
 ];
