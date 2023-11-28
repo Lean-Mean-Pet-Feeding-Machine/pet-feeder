@@ -6,7 +6,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:pet_feeder/features/all_data_provider.dart';
 import 'package:pet_feeder/features/loading/loading.dart';
 import 'package:pet_feeder/features/pet/data/pet_provider.dart';
-import 'package:pet_feeder/features/user/data/user_providers.dart';
+import 'dart:math';
 
 import '../domain/pet.dart';
 
@@ -67,47 +67,40 @@ class AddPetView extends ConsumerWidget {
               child: Column(
                 children: [
                   FormBuilderTextField(
-                    name: 'username',
+                    name: 'name',
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required(),
                     ]),
-                    decoration: InputDecoration(labelText: 'Username'),
+                    decoration: InputDecoration(labelText: 'name'),
                   ),
                   FormBuilderTextField(
-                    name: 'email',
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(),
-                      FormBuilderValidators.email(),
-                    ]),
-                    decoration: InputDecoration(labelText: 'Email'),
-                  ),
-                  FormBuilderTextField(
-                    name: 'password',
+                    name: 'breed',
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required(),
                     ]),
-                    decoration: InputDecoration(labelText: 'Password'),
-                    obscureText: true,
+                    decoration: InputDecoration(labelText: 'Breed'),
+                  ),
+                  FormBuilderDateTimePicker(
+                      name: 'age',
+                    decoration: InputDecoration(labelText: 'Age'),
                   ),
                   FormBuilderTextField(
-                    name: 'confirmPassword',
+                    name: 'species',
+                    decoration: InputDecoration(labelText: 'Species'),
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required(),
                     ]),
-                    decoration: InputDecoration(labelText: 'Confirm Password'),
-                    obscureText: true,
                   ),
                   FormBuilderTextField(
-                    name: 'zipcode',
-                    validator: FormBuilderValidators.compose([]),
-                    decoration: InputDecoration(labelText: 'Zipcode'),
+                    name: 'imagePath',
+                    decoration: InputDecoration(labelText: 'Image'),
                   ),
                   Row(
                     children: [
                       TextButton(
                         onPressed: () {
                           Navigator.pop(context);
-                          Navigator.pushReplacementNamed(context, '/login');
+                          Navigator.pushReplacementNamed(context, '/');
                         },
                         child: Text('Go Back'),
                       ),
@@ -125,21 +118,17 @@ class AddPetView extends ConsumerWidget {
                     child: ElevatedButton(
                       onPressed: () async {
                         if (_formKey.currentState!.saveAndValidate()) {
-                          print(_formKey.currentState?.value);
-                          print(_formKey.currentState?.value['password']);
-
-                          // Register user with Firebase Authentication
                           try {
-                            // Convert the Firebase User to UserData
+                            // Convert the Firebase Pet to Pet
                             Pet pet = Pet(
-                                id: '123',
+                                id: '${Random().nextInt(92233720)}', // magic random ID
                                 ownerId: currentUserID!,
-                                name: 'jeff',
+                                name: _formKey.currentState?.value['name'],
                                 weight: [],
                                 when: [],
-                                age: '2019-11-09T00:00:00Z',
-                                species: 'Dog',
-                                imagePath: 'cat2.png',
+                                age: _formKey.currentState!.value['age'].toString(),
+                                species: _formKey.currentState?.value['species'],
+                                imagePath: _formKey.currentState?.value['imagePath'],
                                 schedule: []
                             );
 

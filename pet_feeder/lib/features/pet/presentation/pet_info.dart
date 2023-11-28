@@ -167,7 +167,7 @@ class PetInfo extends ConsumerWidget {
                                           schedule: pet.schedule,
                                           breed: pet.breed,
                                         );
-                                        ref.read(editPetControllerProvider.notifier).updatePet(
+                                        ref.watch(editPetControllerProvider.notifier).updatePet(
                                             pet: tmpPet, onSuccess: () => print('updated weight')
                                         );
                                       },
@@ -235,7 +235,7 @@ class PetInfo extends ConsumerWidget {
                                           schedule: pet.schedule,
                                           breed: value,
                                         );
-                                        ref.read(editPetControllerProvider.notifier).updatePet(
+                                        ref.watch(editPetControllerProvider.notifier).updatePet(
                                             pet: tmpPet, onSuccess: () => print('updated breed')
                                         );
                                       },
@@ -265,11 +265,12 @@ class PetInfo extends ConsumerWidget {
                                             DateFormat(DateFormat.HOUR24_MINUTE)
                                                 .format(value as DateTime)
                                                 .toString());
-                                        print(pet.schedule.toString());
                                       },
                                       initialValue:
+                                          pet.schedule.isNotEmpty ? 
                                           DateFormat(DateFormat.HOUR24_MINUTE)
-                                              .parse(pet.schedule.last),
+                                              .parse(pet.schedule.last) 
+                                      : DateTime(2023),
                                       name: 'schedule',
                                       focusNode: _scheduleTextBox,
                                       inputType: InputType.time,
@@ -297,7 +298,7 @@ class PetInfo extends ConsumerWidget {
                                   schedule: pet.schedule,
                                   breed: pet.breed,
                                 );
-                                ref.read(editPetControllerProvider.notifier).updatePet(
+                                ref.watch(editPetControllerProvider.notifier).updatePet(
                                     pet: tmpPet, onSuccess: () => print('updated')
                                 );
                               },
@@ -418,7 +419,7 @@ class PetInfo extends ConsumerWidget {
                                           breed: pet.breed,
                                           bcsScore: _radioKey.currentState?.value,
                                         );
-                                        ref.read(editPetControllerProvider.notifier).updatePet(
+                                        ref.watch(editPetControllerProvider.notifier).updatePet(
                                             pet: tmpPet, onSuccess: () => print('updated bcs score')
                                         );
 
