@@ -88,7 +88,7 @@ class PetListPage extends ConsumerWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PetInfo(pet: pet), // Pass the pet data directly
+        builder: (context) => PetInfo(pet2: pet), // Pass the pet data directly
       ),
     );
   }

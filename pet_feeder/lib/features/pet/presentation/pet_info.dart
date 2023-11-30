@@ -17,9 +17,9 @@ import '../domain/pet_db.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class PetInfo extends ConsumerWidget {
-  final Pet pet;
+  final Pet pet2;
 
-  const PetInfo({Key? key, required this.pet}) : super(key: key);
+  const PetInfo({Key? key, required this.pet2}) : super(key: key);
 
   static const String routeName = '/pet-info';
 
@@ -52,8 +52,8 @@ class PetInfo extends ConsumerWidget {
     return asyncAllData.when(
         data: (allData) => _build(
           context: context,
-          // pets: allData.pets,
-          pet: pet,
+          // pets: allData.pets.where(),
+          pet: allData.pets.where((e) => e.id == pet2.id).first,
           // users: allData.users,
           ref: ref,
         ),

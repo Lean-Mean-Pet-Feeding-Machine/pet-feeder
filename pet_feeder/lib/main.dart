@@ -47,7 +47,7 @@ class MyApp extends ConsumerWidget {
           final Pet pet = ModalRoute.of(context)!.settings.arguments as Pet;
 
           // Return the PetInfo widget with the extracted pet data
-          return PetInfo(pet: pet);
+          return PetInfo(pet2: pet);
         },
         '/myapp': (context) => MyApp(),
         '/myvet': (context) => MyVetMessagingPage(),
