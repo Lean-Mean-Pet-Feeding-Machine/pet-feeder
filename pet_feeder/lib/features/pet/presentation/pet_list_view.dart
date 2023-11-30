@@ -9,6 +9,7 @@ import 'package:pet_feeder/features/user/domain/user_db.dart';
 import 'package:provider/provider.dart';
 import '../../user/domain/user.dart';
 import '../domain/pet_db.dart';
+import 'add_pet_view.dart';
 import 'pet_info.dart';
 import 'package:pet_feeder/features/common/side_menu.dart';
 import 'package:pet_feeder/features/common/theme.dart';
@@ -56,7 +57,7 @@ class PetListPage extends ConsumerWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () => {
-            print(uid)
+          Navigator.restorablePushNamed(context, AddPetView.routeName)
           },
           child: Icon(Icons.add),
 
@@ -87,7 +88,7 @@ class PetListPage extends ConsumerWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PetInfo(pet: pet), // Pass the pet data directly
+        builder: (context) => PetInfo(pet2: pet), // Pass the pet data directly
       ),
     );
   }

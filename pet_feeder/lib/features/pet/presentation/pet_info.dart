@@ -17,9 +17,9 @@ import '../domain/pet_db.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class PetInfo extends ConsumerWidget {
-  final Pet pet;
+  final Pet pet2;
 
-  const PetInfo({Key? key, required this.pet}) : super(key: key);
+  const PetInfo({Key? key, required this.pet2}) : super(key: key);
 
   static const String routeName = '/pet-info';
 
@@ -52,8 +52,8 @@ class PetInfo extends ConsumerWidget {
     return asyncAllData.when(
         data: (allData) => _build(
           context: context,
-          // pets: allData.pets,
-          pet: pet,
+          // pets: allData.pets.where(),
+          pet: allData.pets.where((e) => e.id == pet2.id).first,
           // users: allData.users,
           ref: ref,
         ),
@@ -148,8 +148,7 @@ class PetInfo extends ConsumerWidget {
                                   child: Center(
                                     child: FormBuilderTextField(
                                       focusNode: _weightTextBox,
-                                      initialValue:
-                                          weights.last.$1.toString(),
+                                      initialValue: weights.isNotEmpty ? weights.last.$1.toString() : 'Nope',
                                       name: 'weightForm',
                                       onSubmitted: (value) {
                                         List<double> tmpWeight = [...pet.weight];
@@ -168,7 +167,7 @@ class PetInfo extends ConsumerWidget {
                                           schedule: pet.schedule,
                                           breed: pet.breed,
                                         );
-                                        ref.read(editPetControllerProvider.notifier).updatePet(
+                                        ref.watch(editPetControllerProvider.notifier).updatePet(
                                             pet: tmpPet, onSuccess: () => print('updated weight')
                                         );
                                       },
@@ -236,7 +235,7 @@ class PetInfo extends ConsumerWidget {
                                           schedule: pet.schedule,
                                           breed: value,
                                         );
-                                        ref.read(editPetControllerProvider.notifier).updatePet(
+                                        ref.watch(editPetControllerProvider.notifier).updatePet(
                                             pet: tmpPet, onSuccess: () => print('updated breed')
                                         );
                                       },
@@ -266,11 +265,12 @@ class PetInfo extends ConsumerWidget {
                                             DateFormat(DateFormat.HOUR24_MINUTE)
                                                 .format(value as DateTime)
                                                 .toString());
-                                        print(pet.schedule.toString());
                                       },
                                       initialValue:
+                                          pet.schedule.isNotEmpty ? 
                                           DateFormat(DateFormat.HOUR24_MINUTE)
-                                              .parse(pet.schedule.last),
+                                              .parse(pet.schedule.last) 
+                                      : DateTime(2023),
                                       name: 'schedule',
                                       focusNode: _scheduleTextBox,
                                       inputType: InputType.time,
@@ -298,7 +298,7 @@ class PetInfo extends ConsumerWidget {
                                   schedule: pet.schedule,
                                   breed: pet.breed,
                                 );
-                                ref.read(editPetControllerProvider.notifier).updatePet(
+                                ref.watch(editPetControllerProvider.notifier).updatePet(
                                     pet: tmpPet, onSuccess: () => print('updated')
                                 );
                               },
@@ -315,6 +315,7 @@ class PetInfo extends ConsumerWidget {
                   ],
                 ),
                 const SizedBox(height: 20.0),
+                weights.isNotEmpty ?
                 SizedBox(
                   width: 100,
                   height: 250,
@@ -363,7 +364,7 @@ class PetInfo extends ConsumerWidget {
                           isCurved: false,
                         )
                       ])),
-                ),
+                ) : SizedBox(),
                 Accordion(
                     children: [
                       AccordionSection(
@@ -418,7 +419,7 @@ class PetInfo extends ConsumerWidget {
                                           breed: pet.breed,
                                           bcsScore: _radioKey.currentState?.value,
                                         );
-                                        ref.read(editPetControllerProvider.notifier).updatePet(
+                                        ref.watch(editPetControllerProvider.notifier).updatePet(
                                             pet: tmpPet, onSuccess: () => print('updated bcs score')
                                         );
 
