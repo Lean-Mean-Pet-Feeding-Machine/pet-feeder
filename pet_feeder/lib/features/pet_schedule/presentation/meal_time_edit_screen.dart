@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pet_feeder/features/pet_schedule/data/pet_schedule_provider.dart';
-import '../domain/pet_schedule_db.dart';
+import 'package:pet_feeder/features/pet/domain/pet.dart';
+import 'package:pet_feeder/features/pet/data/pet_provider.dart';
 
 class MealTimeEditScreen extends ConsumerWidget {
-  final PetScheduleData petSchedule;
-  final int petIndex;
+  final Pet pet;
 
-  MealTimeEditScreen({required this.petSchedule, required this.petIndex});
+  MealTimeEditScreen({required this.pet});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mealTimeController = TextEditingController();
-
-    // Set initial text in the TextFormField to the current meal time
-    mealTimeController.text = petSchedule.schedule[petIndex];
+    mealTimeController.text = pet.schedule.join(', ');
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Meal Time for ${petSchedule.pets[petIndex]}'),
+        title: Text('Edit Meal Time for ${pet.name}'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -30,15 +27,21 @@ class MealTimeEditScreen extends ConsumerWidget {
             ),
             SizedBox(height: 16.0),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 String newMealTime = mealTimeController.text;
-                // Update the specific meal time using petIndex
-                petSchedule.schedule[petIndex] = newMealTime;
-                // Update the meal times in the provider
-                ref
-                    .read(petScheduleNotifierProvider.notifier)
-                    .updateMealTimes(petSchedule.id, petSchedule.schedule);
-                Navigator.pop(context); // Close the editing screen after saving
+
+                Pet updatedPet = pet.copyWith(
+                  schedule:
+                      newMealTime.split(',').map((e) => e.trim()).toList(),
+                );
+                // Update the meal time
+                await ref
+                    .read(petDatabaseProvider)
+                    .setPetDataDelayed(updatedPet);
+
+                await Future.delayed(Duration(milliseconds: 700));
+
+                Navigator.pop(context);
               },
               child: Text('Save'),
             ),

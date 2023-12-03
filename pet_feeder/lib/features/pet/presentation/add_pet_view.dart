@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,7 +21,7 @@ class AddPetView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<AllData> asyncAllData = ref.watch(allDataProvider);
-        return asyncAllData.when(
+    return asyncAllData.when(
         data: (allData) => _build(
             context: context,
             currentUserID: allData.currentUserID,
@@ -30,7 +29,6 @@ class AddPetView extends ConsumerWidget {
             ref: ref),
         loading: () => const Loading(),
         error: (error, stacktrace) => Text(stacktrace.toString()));
-
   }
 
   Widget _build({
@@ -52,7 +50,7 @@ class AddPetView extends ConsumerWidget {
             const Column(
               children: <Widget>[
                 Text(
-                  'Please register:',
+                  'Add Your Pet:',
                   style: TextStyle(
                     fontSize: 24.0,
                     color: Colors.blue,
@@ -81,7 +79,7 @@ class AddPetView extends ConsumerWidget {
                     decoration: InputDecoration(labelText: 'Breed'),
                   ),
                   FormBuilderDateTimePicker(
-                      name: 'age',
+                    name: 'age',
                     decoration: InputDecoration(labelText: 'Age'),
                   ),
                   FormBuilderTextField(
@@ -90,6 +88,14 @@ class AddPetView extends ConsumerWidget {
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required(),
                     ]),
+                  ),
+                  FormBuilderTextField(
+                    name: 'schedule',
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(),
+                    ]),
+                    decoration:
+                        InputDecoration(labelText: 'Feeding Schedule (HH:mm)'),
                   ),
                   FormBuilderTextField(
                     name: 'imagePath',
@@ -121,19 +127,27 @@ class AddPetView extends ConsumerWidget {
                           try {
                             // Convert the Firebase Pet to Pet
                             Pet pet = Pet(
-                                id: '${Random().nextInt(92233720)}', // magic random ID
-                                ownerId: currentUserID!,
-                                name: _formKey.currentState?.value['name'],
-                                weight: [],
-                                when: [],
-                                age: _formKey.currentState!.value['age'].toString(),
-                                species: _formKey.currentState?.value['species'],
-                                imagePath: _formKey.currentState?.value['imagePath'],
-                                schedule: []
+                              id: '${Random().nextInt(92233720)}', // magic random ID
+                              ownerId: currentUserID!,
+                              name: _formKey.currentState?.value['name'],
+                              weight: [],
+                              when: [],
+                              age: _formKey.currentState!.value['age']
+                                  .toString(),
+                              species: _formKey.currentState?.value['species'],
+                              imagePath:
+                                  _formKey.currentState?.value['imagePath'],
+                              schedule: [
+                                _formKey.currentState?.value['schedule'] ?? ''
+                              ],
                             );
+                            await ref
+                                .read(petDatabaseProvider)
+                                .setPetDataDelayed(pet);
 
-                            // Add user to userDB
-                            ref.read(petDatabaseProvider).setPetData(pet);
+                            // delay before navigating to allow time for data update
+                            await Future.delayed(
+                                const Duration(milliseconds: 2000));
 
                             // Navigate to the next screen
                             Navigator.pushReplacementNamed(context, '/navbar');
@@ -152,9 +166,5 @@ class AddPetView extends ConsumerWidget {
         ),
       ),
     );
-
   }
-
-
-
 }

@@ -27,8 +27,8 @@ class PetDatabase {
       path: FirestorePath.pet(petId),
       builder: (data, documentId) => Pet.fromJson(data!));
 
-  Future<void> setPetData(Pet pet) => _service.setData(
-      path: FirestorePath.pet(pet.id), data: pet.toJson());
+  Future<void> setPetData(Pet pet) =>
+      _service.setData(path: FirestorePath.pet(pet.id), data: pet.toJson());
 
   Future<void> setPetDataDelayed(Pet pet) => Future.delayed(
       const Duration(milliseconds: 2000),
