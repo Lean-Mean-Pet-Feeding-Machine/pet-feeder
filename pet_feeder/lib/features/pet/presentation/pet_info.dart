@@ -76,7 +76,6 @@ class PetInfo extends ConsumerWidget {
       idealWeight = calculateIdealWeight(pet.bcsScore!, pet.weight);
     }
 
-    print(idealWeight);
     List<FlSpot> spots = [];
 
     for (int i = 0; i < pet.weight.length; i++) {
@@ -315,7 +314,7 @@ class PetInfo extends ConsumerWidget {
                   ],
                 ),
                 const SizedBox(height: 20.0),
-                weights.isNotEmpty ?
+                weights.length >= 2 ?
                 SizedBox(
                   width: 100,
                   height: 250,
@@ -347,10 +346,11 @@ class PetInfo extends ConsumerWidget {
                               sideTitles: SideTitles(
                                   reservedSize: 40,
                                   showTitles: true,
-                                  interval: (currentDate.millisecondsSinceEpoch
+                                  interval: spots.map((e) => e.x).max - spots.map((e) => e.x).min > (86400000 * 30) ?
+                                  (currentDate.millisecondsSinceEpoch
                                               .toDouble() -
                                           spots.map((e) => e.x).min) /
-                                      spots.length,
+                                      spots.length : spots.map((e) => e.x).min,
                                   getTitlesWidget: (value, meta) {
                                     if (value ==
                                         spots.map((e) => e.x).min - 340000000) {
@@ -365,6 +365,7 @@ class PetInfo extends ConsumerWidget {
                         )
                       ])),
                 ) : SizedBox(),
+                pet.species.trim().toLowerCase() == 'dog' || pet.species.trim().toLowerCase() == 'cat' ?
                 Accordion(
                     children: [
                       AccordionSection(
@@ -380,7 +381,9 @@ class PetInfo extends ConsumerWidget {
                         ),
                         content: Column(
                           children: [
-                            Image.asset('assets/images/bcs/bcs_dog_chart.png'),
+                            Image.asset(pet.species.trim().toLowerCase() == 'dog' ?
+                            'assets/images/bcs/bcs_dog_chart.png' :
+                            'assets/images/bcs/bcs_cat_chart.png'),
                             FormBuilder(
                               child: Column(
                                 children: [
@@ -434,7 +437,7 @@ class PetInfo extends ConsumerWidget {
                           ],
                         ),
                       ),
-                    ]),
+                    ]) : SizedBox(),
               ],
             ),
           ),

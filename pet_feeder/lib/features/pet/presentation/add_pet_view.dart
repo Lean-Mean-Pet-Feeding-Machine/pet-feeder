@@ -17,7 +17,14 @@ class AddPetView extends ConsumerWidget {
   final _nameField = GlobalKey<FormBuilderFieldState>();
   final _imagePathField = GlobalKey<FormBuilderFieldState>();
   final _breedField = GlobalKey<FormBuilderFieldState>();
-
+  final dropDownItems = [
+    'assets/images/cat1.png',
+    'assets/images/cat2.png',
+    'assets/images/dog1.png',
+    'assets/images/dog2.png',
+    'assets/images/dog3.png',
+    'assets/images/dog4.png'
+  ];
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<AllData> asyncAllData = ref.watch(allDataProvider);
@@ -97,9 +104,22 @@ class AddPetView extends ConsumerWidget {
                     decoration:
                         InputDecoration(labelText: 'Feeding Schedule (HH:mm)'),
                   ),
-                  FormBuilderTextField(
+                  FormBuilderDropdown(
                     name: 'imagePath',
+                    itemHeight: 50,
+                    isDense: false,
                     decoration: InputDecoration(labelText: 'Image'),
+                    items: dropDownItems.map((e) =>
+                        DropdownMenuItem(
+                          value: e,
+                          child: ClipOval(
+                            child: Image.asset(
+                              e,
+                              width: 50,
+                              height: 50,
+                              fit: BoxFit.fill,
+                            ),
+                          ))).toList(),
                   ),
                   Row(
                     children: [
