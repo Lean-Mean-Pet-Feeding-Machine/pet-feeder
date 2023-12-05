@@ -150,6 +150,7 @@ class AddPetView extends ConsumerWidget {
                               id: '${Random().nextInt(92233720)}', // magic random ID
                               ownerId: currentUserID!,
                               name: _formKey.currentState?.value['name'],
+                              breed: _formKey.currentState?.value['breed'],
                               weight: [],
                               when: [],
                               age: _formKey.currentState!.value['age']
