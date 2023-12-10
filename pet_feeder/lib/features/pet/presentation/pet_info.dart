@@ -37,7 +37,7 @@ class PetInfo extends ConsumerWidget {
   }
 
   double calculateIdealWeight(double bcsScore, List<double> weight) {
-    double idealWeight =  bcsScore - 4;
+    double idealWeight = bcsScore - 4;
     idealWeight = idealWeight * 10;
     idealWeight = idealWeight + 100;
     idealWeight = 100 / idealWeight;
@@ -45,31 +45,29 @@ class PetInfo extends ConsumerWidget {
     return idealWeight;
   }
 
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<AllData> asyncAllData = ref.watch(allDataProvider);
     return asyncAllData.when(
-        data: (allData) => _build(
-          context: context,
-          // pets: allData.pets.where(),
-          pet: allData.pets.where((e) => e.id == pet2.id).first,
-          // users: allData.users,
-          ref: ref,
-        ),
-        error: (error, st) => Text(error.toString()),
-        loading: () => Loading(),
+      data: (allData) => _build(
+        context: context,
+        // pets: allData.pets.where(),
+        pet: allData.pets.where((e) => e.id == pet2.id).first,
+        // users: allData.users,
+        ref: ref,
+      ),
+      error: (error, st) => Text(error.toString()),
+      loading: () => Loading(),
     );
   }
 
-  Widget _build(
-      {
-        required BuildContext context,
-        required WidgetRef ref,
-        required Pet pet,
-        // required List<Pet> pets,
-        // required List<User> users,
-      }) {
+  Widget _build({
+    required BuildContext context,
+    required WidgetRef ref,
+    required Pet pet,
+    // required List<Pet> pets,
+    // required List<User> users,
+  }) {
     List<(double, DateTime)> weights = [];
     double idealWeight = 0;
     if (pet.weight.isNotEmpty && pet.bcsScore != null) {
@@ -147,13 +145,18 @@ class PetInfo extends ConsumerWidget {
                                   child: Center(
                                     child: FormBuilderTextField(
                                       focusNode: _weightTextBox,
-                                      initialValue: weights.isNotEmpty ? weights.last.$1.toString() : 'Nope',
+                                      initialValue: weights.isNotEmpty
+                                          ? weights.last.$1.toString()
+                                          : 'Nope',
                                       name: 'weightForm',
                                       onSubmitted: (value) {
-                                        List<double> tmpWeight = [...pet.weight];
+                                        List<double> tmpWeight = [
+                                          ...pet.weight
+                                        ];
                                         List<String> tmpWhen = [...pet.when];
                                         tmpWeight.add(double.parse(value!));
-                                        tmpWhen.add(DateTime.now().toIso8601String());
+                                        tmpWhen.add(
+                                            DateTime.now().toIso8601String());
                                         Pet tmpPet = Pet(
                                           id: pet.id,
                                           ownerId: pet.ownerId,
@@ -166,9 +169,13 @@ class PetInfo extends ConsumerWidget {
                                           schedule: pet.schedule,
                                           breed: pet.breed,
                                         );
-                                        ref.watch(editPetControllerProvider.notifier).updatePet(
-                                            pet: tmpPet, onSuccess: () => print('updated weight')
-                                        );
+                                        ref
+                                            .watch(editPetControllerProvider
+                                                .notifier)
+                                            .updatePet(
+                                                pet: tmpPet,
+                                                onSuccess: () =>
+                                                    print('updated weight'));
                                       },
                                     ),
                                   ),
@@ -234,9 +241,13 @@ class PetInfo extends ConsumerWidget {
                                           schedule: pet.schedule,
                                           breed: value,
                                         );
-                                        ref.watch(editPetControllerProvider.notifier).updatePet(
-                                            pet: tmpPet, onSuccess: () => print('updated breed')
-                                        );
+                                        ref
+                                            .watch(editPetControllerProvider
+                                                .notifier)
+                                            .updatePet(
+                                                pet: tmpPet,
+                                                onSuccess: () =>
+                                                    print('updated breed'));
                                       },
                                     ),
                                   ))),
@@ -265,11 +276,10 @@ class PetInfo extends ConsumerWidget {
                                                 .format(value as DateTime)
                                                 .toString());
                                       },
-                                      initialValue:
-                                          pet.schedule.isNotEmpty ? 
-                                          DateFormat(DateFormat.HOUR24_MINUTE)
-                                              .parse(pet.schedule.last) 
-                                      : DateTime(2023),
+                                      initialValue: pet.schedule.isNotEmpty
+                                          ? DateFormat(DateFormat.HOUR24_MINUTE)
+                                              .parse(pet.schedule.last)
+                                          : DateTime(2023),
                                       name: 'schedule',
                                       focusNode: _scheduleTextBox,
                                       inputType: InputType.time,
@@ -297,9 +307,11 @@ class PetInfo extends ConsumerWidget {
                                   schedule: pet.schedule,
                                   breed: pet.breed,
                                 );
-                                ref.watch(editPetControllerProvider.notifier).updatePet(
-                                    pet: tmpPet, onSuccess: () => print('updated')
-                                );
+                                ref
+                                    .watch(editPetControllerProvider.notifier)
+                                    .updatePet(
+                                        pet: tmpPet,
+                                        onSuccess: () => print('updated'));
                               },
                               inputType: InputType.date,
                               focusNode: _ageTextBox,
@@ -314,130 +326,143 @@ class PetInfo extends ConsumerWidget {
                   ],
                 ),
                 const SizedBox(height: 20.0),
-                weights.length >= 2 ?
-                SizedBox(
-                  width: 100,
-                  height: 250,
-                  child: LineChart(LineChartData(
-                    extraLinesData: ExtraLinesData(
-                      horizontalLines: [
-                       HorizontalLine(
-                           y: idealWeight * 1.10,
-                           color: Colors.red
-                      ),
-                        HorizontalLine(
-                            y: idealWeight * 0.9,
-                            color: Colors.green
-                        )
-                      ]
-                    ),
-                      minX: spots.map((e) => e.x).min - 340000000,
-                      maxX: currentDate.millisecondsSinceEpoch.toDouble(),
-                      minY: (spots.map((e) => e.y).min - 5).floorToDouble(),
-                      maxY: (spots.map((e) => e.y).max + 5).floorToDouble(),
-                      titlesData: FlTitlesData(
-                          show: true,
-                          topTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                  reservedSize: 12, showTitles: false)),
-                          rightTitles: AxisTitles(
-                              sideTitles: SideTitles(showTitles: false)),
-                          bottomTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                  reservedSize: 40,
-                                  showTitles: true,
-                                  interval: spots.map((e) => e.x).max - spots.map((e) => e.x).min > (86400000 * 30) ?
-                                  (currentDate.millisecondsSinceEpoch
-                                              .toDouble() -
-                                          spots.map((e) => e.x).min) /
-                                      spots.length : spots.map((e) => e.x).min,
-                                  getTitlesWidget: (value, meta) {
-                                    if (value ==
-                                        spots.map((e) => e.x).min - 340000000) {
-                                      return Text('');
-                                    }
-                                    return Text(getDate(value));
-                                  }))),
-                      lineBarsData: [
-                        LineChartBarData(
-                          spots: spots,
-                          isCurved: false,
-                        )
-                      ])),
-                ) : SizedBox(),
-                pet.species.trim().toLowerCase() == 'dog' || pet.species.trim().toLowerCase() == 'cat' ?
-                Accordion(
-                    children: [
-                      AccordionSection(
-                        isOpen: false,
-                        header: Center(
-                          child: Text(
-                            'Body condition score',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w200,
-                              color: Colors.white,
+                weights.length >= 2
+                    ? SizedBox(
+                        width: 100,
+                        height: 250,
+                        child: LineChart(LineChartData(
+                            extraLinesData: ExtraLinesData(horizontalLines: [
+                              HorizontalLine(
+                                  y: idealWeight * 1.10, color: Colors.red),
+                              HorizontalLine(
+                                  y: idealWeight * 0.9, color: Colors.green)
+                            ]),
+                            minX: spots.map((e) => e.x).min - 340000000,
+                            maxX: currentDate.millisecondsSinceEpoch.toDouble(),
+                            minY:
+                                (spots.map((e) => e.y).min - 5).floorToDouble(),
+                            maxY:
+                                (spots.map((e) => e.y).max + 5).floorToDouble(),
+                            titlesData: FlTitlesData(
+                                show: true,
+                                topTitles: AxisTitles(
+                                    sideTitles: SideTitles(
+                                        reservedSize: 12, showTitles: false)),
+                                rightTitles: AxisTitles(
+                                    sideTitles: SideTitles(showTitles: false)),
+                                bottomTitles: AxisTitles(
+                                    sideTitles: SideTitles(
+                                        reservedSize: 40,
+                                        showTitles: true,
+                                        interval: spots.map((e) => e.x).max -
+                                                    spots.map((e) => e.x).min >
+                                                (86400000 * 30)
+                                            ? (currentDate
+                                                        .millisecondsSinceEpoch
+                                                        .toDouble() -
+                                                    spots.map((e) => e.x).min) /
+                                                spots.length
+                                            : spots.map((e) => e.x).min,
+                                        getTitlesWidget: (value, meta) {
+                                          if (value ==
+                                              spots.map((e) => e.x).min -
+                                                  340000000) {
+                                            return Text('');
+                                          }
+                                          return Text(getDate(value));
+                                        }))),
+                            lineBarsData: [
+                              LineChartBarData(
+                                spots: spots,
+                                isCurved: false,
+                              )
+                            ])),
+                      )
+                    : SizedBox(),
+                pet.species.trim().toLowerCase() == 'dog' ||
+                        pet.species.trim().toLowerCase() == 'cat'
+                    ? Accordion(children: [
+                        AccordionSection(
+                          isOpen: false,
+                          header: Center(
+                            child: Text(
+                              'Body condition score',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w200,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
-                        ),
-                        content: Column(
-                          children: [
-                            Image.asset(pet.species.trim().toLowerCase() == 'dog' ?
-                            'assets/images/bcs/bcs_dog_chart.png' :
-                            'assets/images/bcs/bcs_cat_chart.png'),
-                            FormBuilder(
-                              child: Column(
-                                children: [
-                                  FormBuilderRadioGroup(
-                                    key: _radioKey,
-                                    validator: FormBuilderValidators.required(),
-                                    name: 'BCS',
-                                    options: [
-                                      1,
-                                      2,
-                                      3,
-                                      4,
-                                      5,
-                                      6,
-                                      7,
-                                      8,
-                                      9,
-                                    ].map((e) => FormBuilderFieldOption(value: e)).toList()
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      pet.idealWeight ?? 0 * 0.9;
-                                      if (_radioKey.currentState!.validate()) {
-                                        print(_radioKey.currentState?.value);
-                                        idealWeight = pet.calculateIdealWeight(_radioKey.currentState?.value);
-                                        Pet tmpPet = Pet(
-                                          id: pet.id,
-                                          ownerId: pet.ownerId,
-                                          name: pet.name,
-                                          weight: pet.weight,
-                                          when: pet.when,
-                                          age: pet.age,
-                                          species: pet.species,
-                                          imagePath: pet.imagePath,
-                                          schedule: pet.schedule,
-                                          breed: pet.breed,
-                                          bcsScore: _radioKey.currentState?.value,
-                                        );
-                                        ref.watch(editPetControllerProvider.notifier).updatePet(
-                                            pet: tmpPet, onSuccess: () => print('updated bcs score')
-                                        );
-
-                                      }
-                                    },
-                                    child: Text('Submit'),
-                                  ),
-                                ],
+                          content: Column(
+                            children: [
+                              Image.asset(
+                                  pet.species.trim().toLowerCase() == 'dog'
+                                      ? 'assets/images/bcs/bcs_dog_chart.png'
+                                      : 'assets/images/bcs/bcs_cat_chart.png'),
+                              FormBuilder(
+                                child: Column(
+                                  children: [
+                                    FormBuilderRadioGroup(
+                                        key: _radioKey,
+                                        validator:
+                                            FormBuilderValidators.required(),
+                                        name: 'BCS',
+                                        options: [
+                                          1,
+                                          2,
+                                          3,
+                                          4,
+                                          5,
+                                          6,
+                                          7,
+                                          8,
+                                          9,
+                                        ]
+                                            .map((e) => FormBuilderFieldOption(
+                                                value: e))
+                                            .toList()),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        pet.idealWeight ?? 0 * 0.9;
+                                        if (_radioKey.currentState!
+                                            .validate()) {
+                                          print(_radioKey.currentState?.value);
+                                          idealWeight =
+                                              pet.calculateIdealWeight(_radioKey
+                                                  .currentState?.value);
+                                          Pet tmpPet = Pet(
+                                            id: pet.id,
+                                            ownerId: pet.ownerId,
+                                            name: pet.name,
+                                            weight: pet.weight,
+                                            when: pet.when,
+                                            age: pet.age,
+                                            species: pet.species,
+                                            imagePath: pet.imagePath,
+                                            schedule: pet.schedule,
+                                            breed: pet.breed,
+                                            bcsScore:
+                                                _radioKey.currentState?.value,
+                                          );
+                                          ref
+                                              .watch(editPetControllerProvider
+                                                  .notifier)
+                                              .updatePet(
+                                                  pet: tmpPet,
+                                                  onSuccess: () => print(
+                                                      'updated bcs score'));
+                                        }
+                                      },
+                                      child: Text('Submit'),
+                                    ),
+                                  ],
+                                ),
                               ),
-
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ]) : SizedBox(),
+                      ])
+                    : SizedBox(),
               ],
             ),
           ),

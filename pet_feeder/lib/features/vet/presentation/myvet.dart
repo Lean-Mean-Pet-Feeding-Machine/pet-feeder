@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_feeder/features/authentication/presentation/login.dart';
 import 'package:pet_feeder/features/common/side_menu.dart';
-import '../domain/vet_db.dart';
 
 class MyVetMessagingPage extends StatefulWidget {
   @override
@@ -29,9 +28,7 @@ class _MyVetMessagingPageState extends State<MyVetMessagingPage> {
         appBar: AppBar(
           title: const Text('My Vet'),
         ),
-        drawer: CustomDrawer(
-            // currentUser: currentUser,
-            ),
+        drawer: CustomDrawer(),
         body: Column(
           children: <Widget>[
             const SizedBox(height: 12.0),
@@ -63,13 +60,13 @@ class _MyVetMessagingPageState extends State<MyVetMessagingPage> {
             margin: const EdgeInsets.symmetric(horizontal: 8.0),
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.grey, // Icon background color
+              color: Colors.grey,
             ),
             child: const Center(
               child: Icon(
-                Icons.person, // Replace with desired icon
-                color: Colors.white, // Icon color
-                size: 24.0, // Icon size
+                Icons.person,
+                color: Colors.white,
+                size: 24.0,
               ),
             ),
           ),
@@ -95,13 +92,13 @@ class _MyVetMessagingPageState extends State<MyVetMessagingPage> {
             margin: const EdgeInsets.symmetric(horizontal: 8.0),
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.blue, // Icon background color
+              color: Colors.blue,
             ),
             child: const Center(
               child: Icon(
-                Icons.person, // Replace with your desired icon
-                color: Colors.white, // Icon color
-                size: 24.0, // Icon size
+                Icons.person,
+                color: Colors.white,
+                size: 24.0,
               ),
             ),
           ),

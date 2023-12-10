@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pet_feeder/features/food_item/data/food_item_provider.dart';
-import 'package:pet_feeder/features/food_item/domain/food_item_db.dart';
-import 'package:pet_feeder/features/authentication/presentation/login.dart';
 import 'package:pet_feeder/features/common/side_menu.dart';
 import 'dart:io';
 import 'package:google_ml_kit/google_ml_kit.dart';
@@ -34,7 +31,6 @@ class _FoodCatalogPageState extends State<FoodCatalogPage> {
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, child) {
-      final currentUser = ref.watch(authProvider);
       return Scaffold(
         appBar: AppBar(
           title: Text('Food Catalog'),

@@ -34,7 +34,6 @@ class VetDB {
       userName: '@dogvet',
       vetID: 'V401',
     ),
-    // Add more vet data as needed
   ];
 
   VetData getVet(String vetID) {

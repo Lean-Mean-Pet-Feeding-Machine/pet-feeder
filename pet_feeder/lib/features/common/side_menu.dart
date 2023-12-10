@@ -36,9 +36,9 @@ class CustomDrawer extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 40,
-                      // logic to load profile picture (user needs to submit one)
+                      // TODO: logic to modify profile picture
                     ),
                     SizedBox(height: 10),
                     Text(

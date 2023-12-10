@@ -1,5 +1,4 @@
 import 'package:pet_feeder/features/food_item/data/food_item_database.dart';
-import 'package:pet_feeder/features/pet/data/pet_database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../domain/food_item.dart';

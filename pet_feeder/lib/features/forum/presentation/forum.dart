@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pet_feeder/features/authentication/presentation/login.dart';
 import 'package:pet_feeder/features/common/side_menu.dart';
 import 'package:pet_feeder/features/common/theme.dart';
 import 'package:pet_feeder/features/common/thememode.dart';
@@ -9,8 +8,6 @@ class ForumPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, child) {
-      final currentUser = ref.watch(authProvider);
-
       return Theme(
         data: ThemeModeOption.light == ThemeModeOption.light
             ? lightTheme

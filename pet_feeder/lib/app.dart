@@ -3,7 +3,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:pet_feeder/features/common/settings_view.dart';
 import 'package:pet_feeder/features/pet/domain/pet.dart';
-import 'package:pet_feeder/features/pet/domain/pet_db.dart';
 import 'package:pet_feeder/features/pet/presentation/pet_info.dart';
 import 'package:pet_feeder/features/pet/presentation/pet_list_view.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
